@@ -23,12 +23,23 @@
 <h3>Dessert</h3>
 <blockquote>
     Ofenäpfel gefüllt mit Panettone
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
 </blockquote>
+
+<script>
+
+let input = document.getElementById("vsInput");
+
+input.addEventListener("keyup", function(event) {
+    if (event.keyCode === 13) {
+        let element = document.createElement("blockquote")
+        element.innerText = document.getElementById("vsInput").value
+        document.getElementById("vsInput").replaceWith(element)
+    }
+});
+
+Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+}
+</script>
 </body>
 </html>
