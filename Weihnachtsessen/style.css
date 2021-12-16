@@ -48,6 +48,7 @@ blockquote {
     font-variant: normal;
     font-weight: 600;
     line-height: 45px;
+    border: black;
 }
 
 .container {
@@ -58,7 +59,7 @@ blockquote {
     position: absolute;
     padding-left: 20px;
     padding-right: 20px;
-    top: 0%;
+    top: 0;
     left: 50%;
     transform: translate(-50%, 0%);
 }
