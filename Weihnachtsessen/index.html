@@ -7,42 +7,26 @@
     <link rel="icon" href="pictures/hat.png">
 </head>
 <body>
+<div class="container">
+    <img src="pictures/snow.gif" style="width:50%; height: 100%"><img src="pictures/snow.gif" style="width:50%;height: 100%">
+    <div class="text-block">
+        <h1>Weihnachtsessen Menu</h1>
+        <p>Wir laden euch herzlich ein!</p>
 
-<h1>Weihnachtsessen Menu</h1>
-<p>Wir laden euch herzlich ein!</p>
-
-<h3>Vorspeise</h3>
-<blockquote>
-    Gemischter Salat mal anders
-</blockquote>
-<h3>Hauptspeise</h3>
-<blockquote>
-    Pouletbrüstli im Teig
-    mit gegartem Gemüse
-</blockquote>
-<h3>Dessert</h3>
-<blockquote>
-    Ofenäpfel gefüllt mit Panettone
-</blockquote>
-
-<script>
-
-    let input = document.getElementById("vsInput");
-
-    input.addEventListener("keyup", function (event) {
-        if (event.keyCode === 13) {
-            let element = document.createElement("blockquote")
-            let value = document.getElementById("vsInput").value
-            if (value.length > 0) {
-                element.innerText = value
-                document.getElementById("vsInput").replaceWith(element)
-            }
-        }
-    });
-
-    Element.prototype.remove = function () {
-        this.parentElement.removeChild(this);
-    }
-</script>
+        <h3>Vorspeise</h3>
+        <blockquote>
+            Gemischter Salat mal anders
+        </blockquote>
+        <h3>Hauptspeise</h3>
+        <blockquote>
+            Pouletbrüstli im Teig
+            mit gegartem Gemüse
+        </blockquote>
+        <h3>Dessert</h3>
+        <blockquote>
+            Ofenäpfel gefüllt mit Panettone<br>und Vanillecreme
+        </blockquote>
+    </div>
+</div>
 </body>
 </html>
