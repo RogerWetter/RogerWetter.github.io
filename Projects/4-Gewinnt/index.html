@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>RW - Projects</title>
-    <link rel="icon" href="../icons/chess.png">
-    <link rel="stylesheet" href="../style.css">
+    <title>RW - 4-Gewinnt!</title>
+    <link rel="icon" href="../../icons/chess.png">
+    <link rel="stylesheet" href="../../style.css">
+    <script src="script.js"></script>
 </head>
 <body>
 <nav class="navbar">
@@ -40,12 +41,34 @@
     </div>
 </nav>
 
-<ul class="proj__list">
-    <li class="proj__item">
-        <a href="/Projects/4-Gewinnt" class="proj__links">
-            4-Gewinnt!
-        </a>
-    </li>
-</ul>
+<div class="text">
+    <h1>4-Gewinnt!</h1>
+    <button id="new_game_btn" style="margin: 0.25vw">new Game</button>
+    <button id="undo_btn" style="margin: 0.25vw">undo</button>
+    <output id="output">Blau ist dran!</output>
+</div>
+
+<div class="board"></div>
+
+<script>
+  showBoard()
+</script>
 </body>
+<script>
+  let ngbtn = document.getElementById("new_game_btn")
+  let undobtn = document.getElementById("undo_btn")
+  let board = document.querySelector(".board")
+
+  board.addEventListener("click", (e) => {
+    clickedBoard(e)
+  })
+
+  ngbtn.addEventListener("click", () => {
+    newGame()
+  })
+
+  undobtn.addEventListener("click", () => {
+    undo()
+  })
+</script>
 </html>
