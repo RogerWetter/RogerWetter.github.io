@@ -95,6 +95,18 @@ h1 {
   transition: all 100ms ease;
 }
 
+.rainbow__text {
+  -webkit-transition: color 1s;
+  transition: color 1s;
+  margin: 0 auto;
+  width: fit-content;
+}
+
+.rainbow__text:hover {
+  background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);   -webkit-background-clip: text;
+  color: transparent;
+}
+
 .picture__container {
   position: relative;
 }
@@ -107,7 +119,7 @@ h1 {
 }
 
 .picture__grid {
-  margin: 3%;
+  margin: 10% 3%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 2%;
