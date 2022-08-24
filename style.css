@@ -109,7 +109,7 @@ h1 {
 .picture__grid {
   margin: 3%;
   display: grid;
-  //grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-gap: 2%;
   list-style-type: none;
 }
