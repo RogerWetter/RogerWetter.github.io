@@ -6,10 +6,32 @@
   padding: 0;
   font-family: Arial, fantasy;
   text-align: center;
+  color: antiquewhite;
+}
+
+body {
+  background: black;
+}
+
+h1 {
+  color: antiquewhite;
+}
+
+.button {
+  background-color: antiquewhite;
+  border-radius: 5px;
+  margin: auto;
+  color: black;
+}
+
+.icons {
+  height: 1.5rem;
+  margin: 0.5rem;
 }
 
 .navbar {
-  background: rgba(52, 50, 50, 0.75);
+  /*background: rgba(52, 50, 50, 0.75);*/
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, rgba(52, 50, 50, 0.75) 100%);
   height: 80px;
   display: flex;
   justify-content: center;
@@ -35,9 +57,7 @@
   background-image: linear-gradient(to top, #67f3bd 0%, #faebd7 100%);
   background-size: 100%;
   -webkit-background-clip: text;
-  -moz-background-clip: text;
   -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -76,24 +96,48 @@
   transition: all 100ms ease;
 }
 
+.proj__list {
+  align-items: center;
+  list-style: none;
+  text-align: center;
+  //display: flex;
+}
 
+.proj__item {
+  height: 110px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.proj__links {
+  color: antiquewhite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  padding: 0 5rem;
+  height: 100px;
+  width: auto;
+  background-image: radial-gradient(closest-side, rgba(58, 141, 109, 0.58), black);
+}
 
 div {
   box-sizing: border-box;
 }
 
-.button {
-  margin: auto;
+.text {
+  margin: 10px;
 }
 
 .board {
   width: 84vmin;
   margin: auto;
-  outline: 1px solid black;
+  outline: 1px solid #ffffff;
 }
 
 .board .field {
-  border: 1px solid black;
+  border: 1px solid #ffffff;
   width: 12vmin;
   height: 12vmin;
   float: left;
@@ -119,7 +163,7 @@ div {
 
 @-webkit-keyframes glow-red-text {
   from {
-    text-shadow: 0 0 10px #FFF, 0 0 20px #FFF, 0 0 30px #5D1620FF, 0 0 40px #5D1620FF, 0 0 50px #5D1620FF, 0 0 60px #5D1620FF, 0 0 70px #5D1620FF;
+    text-shadow: 0 0 10px #FFF, 0 0 20px #d5a8a8, 0 0 30px #652932, 0 0 40px #5D1620FF, 0 0 50px #5D1620FF, 0 0 60px #5D1620FF, 0 0 70px #5D1620FF;
   }
 
   to {

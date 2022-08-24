@@ -1,7 +1,12 @@
-let currentColor = "red"
+let red = "red"
+let blue = "blue"
+let currentColor = red
 let stateSeq = []
 let state = Array(6).fill('').map(el => Array(7).fill(''))
 let gameActive = true
+
+let redturn = "It's 🔴Red's turn!"
+let blueturn = "It's 🔵Blue's turn!"
 
 function showBoard() {
     let board = document.querySelector(".board")
@@ -23,16 +28,19 @@ function showBoard() {
 function undo() {
     let color
     let text
-    if (currentColor === "red") {
-        color = "blue"
-        text = "Rot ist dran!"
+    if (!gameActive) return
+    if (currentColor === red) {
+        color = blue
+        text = redturn
     } else {
-        color = "red"
-        text = "Blau ist dran!"
+        color = red
+        text = blueturn
     }
     if (stateSeq.length>0) {
         state = stateSeq.pop()
-        document.getElementById("output").innerText = text
+        let output = document.getElementById("output")
+        output.removeAttribute("class")
+        output.innerText = text
         currentColor = color
     }
     showBoard()
@@ -44,10 +52,11 @@ function newGame() {
     gameActive = true
     let output = document.getElementById("output")
     output.removeAttribute("class")
-    if (currentColor === "red") {
-        output.innerText = "Lass uns nochmals spielen! Blau ist dran"
+
+    if (currentColor === red) {
+        output.innerText = "Let us play again! " + blueturn
     } else {
-        output.innerText = "Lass uns nochmals spielen! Rot ist dran"
+        output.innerText = "Let us play again! " + redturn
     }
 }
 
@@ -55,7 +64,7 @@ function winner(a) {
     let output = document.getElementById("output");
     gameActive = false
     output.innerText = "The Player with the " + currentColor + " coins has won!!!"
-    if (currentColor === "red") {
+    if (currentColor === red) {
         output.setAttribute("class", "glow-red-text")
         document.getElementById(a[0][0] + "-" + a[0][1]).childNodes.forEach(value => value.setAttribute("class", "field red piece glow-red"))
         document.getElementById(a[1][0] + "-" + a[1][1]).childNodes.forEach(value => value.setAttribute("class", "field red piece glow-red"))
@@ -71,7 +80,7 @@ function winner(a) {
 }
 
 function noWinner() {
-    document.getElementById("output").innerText = "also... niemand hat gewonnen..."
+    document.getElementById("output").innerText = "so... remis...? just click the field to play again!"
     gameActive = false
 }
 
@@ -173,12 +182,12 @@ function clickedBoard(e) {
         }
         let text
         let color
-        if (currentColor === "red") {
-            color = "blue"
-            text = "Rot ist dran!"
+        if (currentColor === red) {
+            color = blue
+            text = redturn
         } else {
-            color = "red"
-            text = "Blau ist dran!"
+            color = red
+            text = blueturn
         }
         stateSeq.push(JSON.parse(JSON.stringify(state)))
         if (updateBoard(color, column)) {
