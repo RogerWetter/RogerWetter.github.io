@@ -70,6 +70,7 @@ h1 {
 }
 
 .navbar__menu {
+  margin: 2rem;
   display: flex;
   align-items: center;
   list-style: none;
@@ -103,7 +104,8 @@ h1 {
 }
 
 .rainbow__text:hover {
-  background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);   -webkit-background-clip: text;
+  background-image: linear-gradient(to left, violet, #5c0c96, #6666b7, #397eaf,
+  #1ac9b8, rgba(101, 255, 228, 0.58), #a6f367);   -webkit-background-clip: text;
   color: transparent;
 }
 
