@@ -242,7 +242,6 @@ h1 {
   align-items: center;
   list-style: none;
   text-align: center;
-  //display: flex;
 }
 
 .proj__item {
@@ -269,9 +268,10 @@ h1 {
   transition: all 100ms ease;
 }
 
-div {
-  box-sizing: border-box;
-}
+/*
+-----------------------------------------------------------------------
+Connect 4
+ */
 
 .text {
   margin: 10px;
@@ -357,4 +357,87 @@ div {
   to {
     box-shadow: 0 0 20px #fff, 0 0 30px #d4af37, 0 0 40px #d4af37, 0 0 50px #d4af37, 0 0 60px #d4af37, 0 0 70px #d4af37, 0 0 80px #d4af37;
   }
+}
+
+/*
+-----------------------------------------------------------------------
+Chess
+ */
+
+.parent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chessboard{
+  width: 500px;
+  height: 500px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.chessboard > .chessboard-square{
+  width: calc(500px / 8);
+  height: calc(500px / 8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chessboard > .chessboard-square[role="white"]{
+  background: #faebd7;
+}
+
+.chessboard > .chessboard-square[role="black"]{
+  background: #025e3b;
+}
+
+.chessboard > .chessboard-square::before{
+  content: "";
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #ffffff;
+  position: absolute;
+  opacity: 70%;
+  visibility: hidden;
+}
+
+.chessboard > .chessboard-square.move::before{
+  visibility: visible;
+}
+
+.chessboard > .chessboard-square.enemy::before{
+  visibility: visible;
+}
+
+.chessboard > .chessboard-square.castling::before{
+  visibility: visible;
+}
+
+.chessboard > .chessboard-square.from{
+  -moz-box-shadow:    inset 0 0 10px rgba(58, 141, 109, 0.58);
+  -webkit-box-shadow: inset 0 0 10px rgba(58, 141, 109, 0.58);
+  box-shadow:         inset 0 0 10px rgba(58, 141, 109, 0.58);
+}
+
+.chessboard > .chessboard-square.to{
+  -moz-box-shadow:    inset 0 0 10px #67f3bd;
+  -webkit-box-shadow: inset 0 0 10px #67f3bd;
+  box-shadow:         inset 0 0 10px #67f3bd;
+}
+
+.chessboard > .chessboard-square > img.chessboard-piece{
+  max-width: 50px;
+  width: 50px;
+  height: auto;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+}
+
+.chessboard > .chessboard-square > img.chessboard-piece:active{
+  cursor: grabbing;
 }
