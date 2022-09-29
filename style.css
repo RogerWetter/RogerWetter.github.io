@@ -73,6 +73,11 @@ h1 {
     font-size: xx-large;
   }
 
+  .icons {
+    height: 2.5rem;
+    margin: 1rem;
+  }
+
   .navbar {
     height: 200px;
   }
@@ -346,15 +351,14 @@ h1 {
 /*IPHONE IPAD*/
 @media only screen and (max-device-width: 900px) {
 
+  .proj__item {
+    height: 250px;
+  }
+
   .proj__links {
-    color: antiquewhite;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
+    font-size: 40px;
     padding: 0 5rem;
-    height: 180px;
-    width: auto;
+    height: 230px;
     background-image: radial-gradient(closest-side, rgba(58, 141, 109, 0.58), black);
   }
 }
