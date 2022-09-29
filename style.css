@@ -144,6 +144,37 @@ h1 {
   justify-content: center;
 }
 
+/*IPAD*/
+@media only screen and (max-device-width: 900px) {
+
+  .picture__grid {
+    margin: 10% 3%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 2%;
+    list-style-type: none;
+  }
+
+  .overlay {
+    opacity: 1;
+    background-image: radial-gradient(closest-side, black, rgba(58, 141, 109, 0.3), rgba(0, 0, 0, 0));
+  }
+}
+
+/*IPHONE*/
+@media only screen and (max-device-width: 500px) {
+
+
+  .picture__grid {
+    margin: 10% 3%;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 2%;
+    list-style-type: none;
+  }
+
+}
+
 .picture__container:hover .overlay {
   opacity: 1;
 }
