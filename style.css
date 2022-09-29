@@ -158,31 +158,18 @@ h1 {
 /*IPAD*/
 @media only screen and (max-device-width: 900px) {
 
-  .picture {
-    display: block;
-    max-width: 100%;
-    height: auto;
-    border-radius: 15px;
-  }
-
   .picture__grid {
-    margin: 3% 3%;
-    display: grid;
+    margin: 5% 5%;
     grid-template-columns: repeat(2, 1fr);
-    grid-gap: 2%;
-    list-style-type: none;
+    grid-gap: 5%;
   }
 
   .overlay {
-    max-width: 100%;
-    height: auto;
     opacity: 1;
     background-image: radial-gradient(closest-side, black, rgba(58, 141, 109, 0.3), rgba(0, 0, 0, 0));
   }
 
   .overlay__text {
-    color: antiquewhite;
-    text-decoration: none;
     font-size: xxx-large;
     font-weight: bolder;
   }
@@ -193,10 +180,7 @@ h1 {
 
   .picture__grid {
     margin: 10% 15%;
-    display: grid;
     grid-template-columns: repeat(1, 1fr);
-    grid-gap: 5%;
-    list-style-type: none;
   }
 
 }
