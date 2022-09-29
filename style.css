@@ -68,14 +68,35 @@ h1 {
 /*IPAD*/
 @media only screen and (max-device-width: 900px) {
 
+  * {
+    text-align: center;
+    color: antiquewhite;
+  }
+
+  .navbar {
+
+  }
+
   .navbar__container {
     justify-content: center;
-    padding: 0 0px;
+    height: 80px;
   }
 
   #navbar__logo {
     font-size: 5rem;
-    font-family: "Baskerville Old Face", fantasy;
+    font-family: Baskerville, serif;
+  }
+
+  .navbar__item {
+    margin: 10px;
+    height: 60px;
+    border-radius: 15%;
+    border: 1px solid antiquewhite;
+  }
+
+  .navbar__links {
+    font-size: xx-large;
+    height: 100%;
   }
 }
 
