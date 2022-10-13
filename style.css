@@ -404,9 +404,10 @@ PROJECTS
   }
 
   .proj__links {
-    font-size: 40px;
+    font-size: 30px;
     padding: 0 5rem;
     height: 230px;
+    max-width: 100%;
     background-image: radial-gradient(closest-side, rgba(58, 141, 109, 0.58), black);
   }
 }
