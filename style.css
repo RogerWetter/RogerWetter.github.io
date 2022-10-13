@@ -64,55 +64,6 @@ h1 {
   font-family: "Cambria Math", fantasy;
 }
 
-/*IPAD*/
-@media only screen and (max-device-width: 900px) {
-
-  * {
-    text-align: center;
-    color: antiquewhite;
-    font-size: xx-large;
-  }
-
-  .icons {
-    height: 2.5rem;
-    margin: 1rem;
-  }
-
-  .navbar {
-    height: 200px;
-  }
-
-  .navbar__container {
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-  }
-
-  #navbar__logo {
-    font-size: 150px;
-    font-family: Baskerville, serif;
-  }
-
-  .navbar__menu {
-    height: 150px;
-  }
-
-  .navbar__item {
-    margin: 10px;
-    height: 150px;
-    border-radius: 15%;
-    border: 1px solid antiquewhite;
-  }
-
-  .navbar__links {
-    font-size: 40px;
-  }
-}
-
-/*IPHONE*/
-@media only screen and (max-device-width: 500px) {
-
-}
 
 .fa_gem {
   margin-right: 0.5rem;
@@ -156,6 +107,82 @@ h1 {
   background-image: linear-gradient(to left, violet, #5c0c96, #6666b7, #397eaf,
   #1ac9b8, rgba(101, 255, 228, 0.58), #a6f367);   -webkit-background-clip: text;
   color: transparent;
+}
+
+/*IPAD*/
+@media only screen and (max-device-width: 900px) {
+
+  * {
+    text-align: center;
+    color: antiquewhite;
+  }
+
+  .icons {
+    height: 2.5rem;
+    margin: 1rem;
+  }
+
+  .navbar {
+    height: 150px;
+  }
+
+  .navbar__container {
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  #navbar__logo {
+    font-size: 80px;
+    font-family: Baskerville, serif;
+  }
+
+  .navbar__menu {
+    height: 150px;
+  }
+
+  .navbar__item {
+    margin: 5%;
+    height: 100px;
+    border-radius: 15%;
+    border: 1px solid antiquewhite;
+  }
+
+  .navbar__links {
+    font-size: 40px;
+  }
+}
+
+/*IPHONE*/
+@media only screen and (max-device-width: 500px) {
+  .navbar {
+    height: 100px;
+  }
+
+  .navbar__container {
+    justify-content: space-evenly;
+    padding: 0 1px;
+  }
+
+  #navbar__logo {
+    font-size: 70px;
+  }
+
+  .navbar__menu {
+    height: 80px;
+  }
+
+  .navbar__item {
+    margin: 1%;
+    height: 50px;
+    border-radius: 15%;
+    border: 1px solid antiquewhite;
+  }
+
+  .navbar__links {
+    font-size: 20px;
+    margin: 0 2px;
+  }
 }
 
 .picture__container {
