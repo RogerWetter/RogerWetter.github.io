@@ -310,6 +310,16 @@ h1 {
   opacity: 1;
 }
 
+/*IPHONE*/
+@media only screen and (max-device-width: 500px) {
+  .about__container:hover .overlay__about {
+  }
+
+  .about__container:active .overlay__about {
+    opacity: 1;
+  }
+}
+
 .shadow {
   position: absolute;
   top: 0;
