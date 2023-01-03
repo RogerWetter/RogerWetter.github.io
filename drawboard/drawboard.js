@@ -37,7 +37,8 @@ window.addEventListener('load', () => {
     for (const element of touches) {
       ongoingTouches.push(copyTouch(element));
       ctx.beginPath();
-      ctx.arc(element.pageX, element.pageY, lineWidth/2, 0, 2 * Math.PI, false);
+      ctx.arc(element.pageX, element.pageY, lineWidth/2, 0, 2 * Math.PI, false)
+      ctx.fill()
     }
 
   }
