@@ -1,0 +1,53 @@
+* {
+  margin: 0;
+  padding: 0;
+  background-color: #353536;
+}
+.canvas-container{
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+}
+#canvas {
+  position: absolute;
+  background-color: #353536;
+}
+.buttons {
+  position:absolute;
+  left:20px;
+  top:20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2%;
+  list-style-type: none;
+}
+.button {
+  background-color: black;
+  height: 30px;
+  color: white;
+  border-radius: 5px;
+  min-width: 30px;
+  width: auto;
+}
+
+/*IPAD*/
+@media only screen and (max-device-width: 900px) {
+  .buttons {
+    position:absolute;
+    left:20px;
+    top: auto;
+    bottom:20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10%;
+    list-style-type: none;
+  }
+  .button {
+    background-color: black;
+    height: 30px;
+    color: white;
+    border-radius: 5px;
+    min-width: 30px;
+    width: auto;
+  }
+}

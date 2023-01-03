@@ -373,7 +373,10 @@ PROJECTS
  */
 
 .proj__list {
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 0;
+  margin: 5% 15%;
   list-style: none;
   text-align: center;
 }
