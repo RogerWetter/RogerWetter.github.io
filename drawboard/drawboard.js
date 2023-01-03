@@ -7,7 +7,6 @@ window.addEventListener('load', () => {
 
   let drawing = false;
   let lineWidth = 5;
-  let color = '#fff';
   const ongoingTouches = [];
 
   ctx.strokeStyle = '#fff'
@@ -38,6 +37,7 @@ window.addEventListener('load', () => {
     for (const element of touches) {
       ongoingTouches.push(copyTouch(element));
       ctx.beginPath();
+      ctx.arc(element.pageX, element.pageY, lineWidth/2, 0, 2 * Math.PI, false);
     }
 
   }
