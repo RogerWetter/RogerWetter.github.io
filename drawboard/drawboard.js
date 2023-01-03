@@ -10,6 +10,7 @@ window.addEventListener('load', () => {
   const ongoingTouches = [];
 
   ctx.strokeStyle = '#fff'
+  ctx.fillStyle = '#fff'
 
   function startPosition(e) {
     drawing = true;
