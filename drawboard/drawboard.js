@@ -1,12 +1,12 @@
 
 const canvas = document.querySelector('#canvas')
 const ctx = canvas.getContext('2d')
+let lineWidth = 5;
 
 window.addEventListener('load', () => {
   setCanvasSize()
 
   let drawing = false;
-  let lineWidth = 5;
   const ongoingTouches = [];
 
   ctx.strokeStyle = '#fff'
@@ -115,6 +115,14 @@ document.getElementById('colorPicker').addEventListener('load', (color) =>{
 document.getElementById('colorPicker').addEventListener('change', (color) =>{
   ctx.strokeStyle = color.target.value
   ctx.fillStyle = color.target.value
+})
+document.getElementById('lineWidthPicker').addEventListener('load', () =>{
+  lineWidth = document.getElementById('lineWidthPicker').value
+  console.log(lineWidth)
+})
+document.getElementById('lineWidthPicker').addEventListener('change', (newLineWidth) =>{
+  lineWidth = document.getElementById('lineWidthPicker').value
+  console.log(lineWidth)
 })
 
 document.getElementById('clearBtn').addEventListener('click', () => {

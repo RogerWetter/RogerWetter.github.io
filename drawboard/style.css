@@ -17,7 +17,7 @@
   left:20px;
   top:20px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, min-content);
   grid-gap: 2%;
   list-style-type: none;
 }
@@ -28,6 +28,7 @@
   border-radius: 5px;
   min-width: 30px;
   width: auto;
+  //display: inline;
 }
 
 /*IPAD*/
@@ -38,9 +39,6 @@
     top: auto;
     right: 20px;
     bottom:20px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 10%;
     list-style-type: none;
   }
   .button {
@@ -49,6 +47,6 @@
     color: white;
     border-radius: 10px;
     min-width: 50px;
-    width: auto;
+    max-width: 100px;
   }
 }
