@@ -5,7 +5,7 @@
 }
 .canvas-container{
   position: relative;
-  height: 100vh;
+  height: 90vh;
   width: 100vw;
 }
 #canvas {
@@ -34,8 +34,9 @@
 @media only screen and (max-device-width: 900px) {
   .buttons {
     position:absolute;
-    left:20px;
+    left: auto;
     top: auto;
+    right: 20px;
     bottom:20px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
