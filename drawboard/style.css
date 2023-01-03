@@ -5,7 +5,7 @@
 }
 .canvas-container{
   position: relative;
-  height: 90vh;
+  height: 80vh;
   width: 100vw;
 }
 #canvas {
@@ -20,6 +20,7 @@
   grid-template-columns: repeat(3, min-content);
   grid-gap: 2%;
   list-style-type: none;
+  background-color: rgba(183,183,183,0);
 }
 .button {
   background-color: black;
@@ -28,7 +29,6 @@
   border-radius: 5px;
   min-width: 30px;
   width: auto;
-  //display: inline;
 }
 
 /*IPAD*/
