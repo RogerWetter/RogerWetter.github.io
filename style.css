@@ -409,6 +409,15 @@ PROJECTS
 /*IPHONE IPAD*/
 @media only screen and (max-device-width: 900px) {
 
+  .proj__list {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 0;
+    margin: 0;
+    list-style: none;
+    text-align: center;
+  }
+
   .proj__item {
     height: 250px;
   }
