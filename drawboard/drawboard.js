@@ -54,6 +54,7 @@ window.addEventListener('load', () => {
 
       if (idx >= 0) {
         ctx.beginPath();
+        ctx.lineWidth = lineWidth
         ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
         ctx.lineTo(element.pageX, element.pageY);
         ctx.lineCap = "round"

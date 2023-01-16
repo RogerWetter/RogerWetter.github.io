@@ -5,8 +5,13 @@
 }
 .canvas-container{
   position: relative;
-  height: 90vh;
+
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
   width: 100vw;
+  margin: 0;
+  padding: 0;
 }
 #canvas {
   position: absolute;
@@ -22,11 +27,12 @@
   position:absolute;
   left:20px;
   top:20px;
-  display: grid;
-  grid-template-columns: repeat(4, min-content);
-  grid-gap: 2%;
+  display: flex;
+  flex-direction: row;
   list-style-type: none;
   background-color: rgba(183,183,183,0);
+  margin: 0;
+  padding: 0;
 }
 .button {
   background-color: black;
@@ -35,6 +41,7 @@
   border-radius: 5px;
   min-width: 30px;
   width: auto;
+  margin: 5px;
 }
 .buttonImage {
   background: none;
@@ -61,11 +68,16 @@ li {
 /*IPAD*/
 @media only screen and (max-device-width: 900px) {
   .buttons {
-    position:absolute;
+    width: 100%;
+    justify-content: space-evenly;
+    margin-top: auto;
+    display: flex;
+    flex-direction: row;
+    position:relative;
     left: auto;
     top: auto;
-    right: 20px;
-    bottom:20px;
+    /*right: 20px;
+    bottom:20px;*/
     list-style-type: none;
   }
   .button {
