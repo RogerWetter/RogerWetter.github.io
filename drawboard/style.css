@@ -12,6 +12,7 @@
   width: 100vw;
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 #canvas {
   position: absolute;
@@ -45,8 +46,8 @@
 }
 .buttonImage {
   background: none;
-  height: 80%;
-  width: 80%;
+  height: 25px;
+  width: 25px;
 }
 @media (min-device-width: 900px) {
   .button:hover {
@@ -79,6 +80,7 @@ li {
     /*right: 20px;
     bottom:20px;*/
     list-style-type: none;
+    padding-bottom: calc(1em + env(safe-area-inset-bottom));
   }
   .button {
     background-color: black;
@@ -87,5 +89,9 @@ li {
     border-radius: 10px;
     min-width: 50px;
     max-width: 100px;
+  }
+  .buttonImage {
+    height: 40px;
+    width: 40px;
   }
 }
