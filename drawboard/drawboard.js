@@ -13,17 +13,19 @@ window.addEventListener('load', () => {
   ctx.fillStyle = '#fff'
 
   function startPosition(e) {
+    if (e.button !== 0) return
     drawing = true;
     draw(e);
   }
 
-  function finishedPosition() {
+  function finishedPosition(e) {
+    if (e.button !== 0) return
     drawing = false;
     ctx.beginPath();
   }
 
   function draw(e) {
-    if (!drawing) return
+    if (e.button !== 0 || !drawing) return
     ctx.lineWidth = lineWidth
     ctx.lineCap = "round"
 
