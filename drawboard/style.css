@@ -41,8 +41,14 @@
   height: 80%;
   width: 80%;
 }
-.button:hover, .pressed {
+@media (min-width: 900px) {
+  .button:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+}
+.pressed {
   background-color: rgba(72, 72, 72, 0.5);
+  border-color: #1ac9b8;
 }
 
 li {
