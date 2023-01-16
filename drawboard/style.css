@@ -12,12 +12,18 @@
   position: absolute;
   background-color: #353536;
 }
+.canvas-drawing {
+  cursor: url('../icons/pencil.ico'), default;
+}
+.canvas-erasing {
+  cursor: url('../icons/eraser.ico'), default;
+}
 .buttons {
   position:absolute;
   left:20px;
   top:20px;
   display: grid;
-  grid-template-columns: repeat(3, min-content);
+  grid-template-columns: repeat(4, min-content);
   grid-gap: 2%;
   list-style-type: none;
   background-color: rgba(183,183,183,0);
@@ -29,6 +35,21 @@
   border-radius: 5px;
   min-width: 30px;
   width: auto;
+}
+.buttonImage {
+  background: none;
+  height: 80%;
+  width: 80%;
+}
+.button:hover, .pressed {
+  background-color: rgba(72, 72, 72, 0.5);
+}
+
+li {
+  height: fit-content;
+  width: fit-content;
+  background: transparent;
+  border: none;
 }
 
 /*IPAD*/

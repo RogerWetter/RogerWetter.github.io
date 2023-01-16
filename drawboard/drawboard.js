@@ -1,7 +1,8 @@
 
 const canvas = document.querySelector('#canvas')
 const ctx = canvas.getContext('2d')
-let lineWidth = 5;
+let lineWidth = 5
+let erasing = false
 
 window.addEventListener('load', () => {
   setCanvasSize()
@@ -11,6 +12,8 @@ window.addEventListener('load', () => {
 
   ctx.strokeStyle = '#fff'
   ctx.fillStyle = '#fff'
+  ctx.lineWidth = 5
+  ctx.lineCap = "round"
 
   function startPosition(e) {
     if (e.button !== 0) return
@@ -26,9 +29,6 @@ window.addEventListener('load', () => {
 
   function draw(e) {
     if (e.button !== 0 || !drawing) return
-    ctx.lineWidth = lineWidth
-    ctx.lineCap = "round"
-
     ctx.lineTo(e.clientX, e.clientY)
     ctx.stroke();
     ctx.beginPath();
@@ -56,7 +56,6 @@ window.addEventListener('load', () => {
         ctx.beginPath();
         ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
         ctx.lineTo(element.pageX, element.pageY);
-        ctx.lineWidth = lineWidth;
         ctx.lineCap = "round"
         ctx.stroke();
 
@@ -72,7 +71,6 @@ window.addEventListener('load', () => {
     for (const element of touches) {
       let idx = ongoingTouchIndexById(element.identifier);
       if (idx >= 0) {
-        ctx.lineWidth = lineWidth;
         ctx.beginPath();
         ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
         ctx.lineTo(element.pageX, element.pageY);
@@ -94,7 +92,9 @@ window.addEventListener('load', () => {
     return { identifier, pageX, pageY };
   }
 
-  canvas.addEventListener("mousedown", startPosition);
+  canvas.addEventListener("mousedown", (e) => {
+    startPosition(e)
+  });
   canvas.addEventListener("mouseup", finishedPosition);
   canvas.addEventListener("mousemove", draw);
   //canvas.addEventListener('mouseout', finishedPosition)
@@ -120,13 +120,23 @@ document.getElementById('colorPicker').addEventListener('change', (color) =>{
 })
 document.getElementById('lineWidthPicker').addEventListener('load', () =>{
   lineWidth = document.getElementById('lineWidthPicker').value
-  console.log(lineWidth)
+  ctx.lineWidth = lineWidth
 })
 document.getElementById('lineWidthPicker').addEventListener('change', () =>{
   lineWidth = document.getElementById('lineWidthPicker').value
-  console.log(lineWidth)
+  ctx.lineWidth = lineWidth
 })
 
-document.getElementById('clearBtn').addEventListener('click', () => {
-  ctx.clearRect(0, 0, canvas.width, canvas.height)
-})
+document.getElementById('clearBtn').onclick = () => {
+  if (confirm('Sure you want to clear the whole site?'))
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+}
+
+const eraserBtn = document.getElementById('eraserBtn')
+
+eraserBtn.onclick = () => {
+  erasing = !erasing
+  eraserBtn.className = erasing? 'pressed button' : 'button'
+  canvas.className = erasing? 'canvas-erasing' : 'canvas-drawing'
+  ctx.globalCompositeOperation = erasing? "destination-out" : "source-over"
+}
