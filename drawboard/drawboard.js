@@ -122,7 +122,7 @@ document.getElementById('lineWidthPicker').addEventListener('load', () =>{
   lineWidth = document.getElementById('lineWidthPicker').value
   console.log(lineWidth)
 })
-document.getElementById('lineWidthPicker').addEventListener('change', (newLineWidth) =>{
+document.getElementById('lineWidthPicker').addEventListener('change', () =>{
   lineWidth = document.getElementById('lineWidthPicker').value
   console.log(lineWidth)
 })
