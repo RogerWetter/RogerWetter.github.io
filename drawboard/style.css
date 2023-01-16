@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   background-color: #353536;
+  overflow: hidden;
 }
 .canvas-container{
   position: relative;
@@ -80,7 +81,6 @@ li {
     /*right: 20px;
     bottom:20px;*/
     list-style-type: none;
-    padding-bottom: calc(1em + env(safe-area-inset-bottom));
   }
   .button {
     background-color: black;
