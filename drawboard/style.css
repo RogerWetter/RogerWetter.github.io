@@ -41,7 +41,7 @@
   height: 80%;
   width: 80%;
 }
-@media (min-width: 900px) {
+@media (min-device-width: 900px) {
   .button:hover {
     background-color: rgba(0, 0, 0, 0.5);
   }
