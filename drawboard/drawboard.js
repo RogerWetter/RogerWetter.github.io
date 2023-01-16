@@ -141,5 +141,3 @@ eraserBtn.onclick = () => {
   canvas.className = erasing? 'canvas-erasing' : 'canvas-drawing'
   ctx.globalCompositeOperation = erasing? "destination-out" : "source-over"
 }
-
-window.scrollTo(0, document.body.scrollHeight);
