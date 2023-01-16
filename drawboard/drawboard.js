@@ -107,8 +107,8 @@ window.addEventListener('load', () => {
 
 window.addEventListener('resize', setCanvasSize)
 function setCanvasSize() {
-  canvas.height = window.innerHeight
-  canvas.width = window.innerWidth
+  canvas.height = window.innerHeight-50
+  canvas.width = window.innerWidth-50
 }
 
 document.getElementById('colorPicker').addEventListener('load', (color) =>{
