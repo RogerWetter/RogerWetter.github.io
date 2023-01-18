@@ -4,6 +4,10 @@
   background-color: #353536;
   overflow: hidden;
 }
+body {
+  margin: 0;
+  padding: 0;
+}
 .canvas-container{
   position: relative;
 
