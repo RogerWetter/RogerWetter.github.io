@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RW - Connect 4!</title>
+    <link rel="icon" href="../../icons/Initials.png">
+    <link rel="stylesheet" href="../../style.css?v=1">
+    <script src="script.js"></script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="navbar__container">
+        <a href="/" id="navbar__logo">RW</a>
+        <div class="navbar__toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <ul class="navbar__menu">
+            <li class="navbar__item">
+                <a href="/Projects" class="navbar__links">
+                    Projects
+                </a>
+            </li>
+            <li class="navbar__item">
+                <a href="/About" class="navbar__links">
+                    About
+                </a>
+            </li>
+            <li class="navbar__item">
+                <a href="/Contact" class="navbar__links">
+                    Contact
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="text">
+    <h1>Connect 4!</h1>
+    <button id="new_game_btn" class="button">new Game</button>
+    <button id="undo_btn" class="button">undo</button>
+    <output id="output">It's 🔵Blue's turn!</output>
+</div>
+
+<div class="board"></div>
+
+<script>
+  showBoard()
+</script>
+</body>
+<script>
+  let ngbtn = document.getElementById("new_game_btn")
+  let undobtn = document.getElementById("undo_btn")
+  let board = document.querySelector(".board")
+
+  board.addEventListener("click", (e) => {
+    clickedBoard(e)
+  })
+
+  ngbtn.addEventListener("click", () => {
+    newGame()
+  })
+
+  undobtn.addEventListener("click", () => {
+    undo()
+  })
+</script>
+</html>

@@ -1,0 +1,100 @@
+* {
+  margin: 0;
+  padding: 0;
+  background-color: #353536;
+  overflow: hidden;
+}
+body {
+  margin: 0;
+  padding: 0;
+}
+.canvas-container{
+  position: relative;
+
+  display: flex;
+  flex-direction: row;
+  height: 90vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+}
+#canvas {
+  position: absolute;
+  background-color: #353536;
+}
+.canvas-drawing {
+  cursor: url('../icons/pencil.ico'), default;
+}
+.canvas-erasing {
+  cursor: url('../icons/eraser.ico'), default;
+}
+.buttons {
+  position:absolute;
+  left:20px;
+  top:20px;
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  background-color: rgba(183,183,183,0);
+  margin: 0;
+  padding: 0;
+}
+.button {
+  background-color: black;
+  height: 30px;
+  color: white;
+  border-radius: 5px;
+  min-width: 30px;
+  width: auto;
+  margin: 5px;
+}
+.buttonImage {
+  background: none;
+  height: 25px;
+  width: 25px;
+}
+@media (min-device-width: 900px) {
+  .button:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+}
+.pressed {
+  background-color: rgba(72, 72, 72, 0.5);
+  border-color: #1ac9b8;
+}
+
+li {
+  height: fit-content;
+  width: fit-content;
+  background: transparent;
+  border: none;
+}
+
+/*IPAD*/
+@media only screen and (max-device-width: 900px) {
+  .buttons {
+    width: 100%;
+    justify-content: space-evenly;
+    margin-top: auto;
+    display: flex;
+    flex-direction: row;
+    position:relative;
+    left: auto;
+    top: auto;
+    /*right: 20px;
+    bottom:20px;*/
+    list-style-type: none;
+  }
+  .button {
+    background-color: black;
+    height: 50px;
+    color: white;
+    border-radius: 10px;
+    min-width: 50px;
+    max-width: 100px;
+  }
+  .buttonImage {
+    height: 40px;
+    width: 40px;
+  }
+}

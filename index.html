@@ -2,40 +2,47 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Roger Wetter</title>
-    <link rel="icon" href="icons/chess.png">
-    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="icons/Initials.png">
+    <link type="text/css" rel="stylesheet" media="screen" href="style.css" />
 </head>
 <body>
 <nav class="navbar">
     <div class="navbar__container">
         <a href="/" id="navbar__logo">RW</a>
-        <div class="navbar__toggle" id="mobile-menu">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </div>
-        <ul class="navbar__menu">
-            <li class="navbar__item">
-                <a href="/" class="navbar__links">
-                    Home
-                </a>
-            </li>
-            <li class="navbar__item">
-                <a href="/Projects" class="navbar__links">
-                    Projects
-                </a>
-            </li>
-            <li class="navbar__item">
-                <a href="https://github.com/RogerWetter" class="navbar__links">
-                    GitHub
-                </a>
-            </li>
-        </ul>
     </div>
 </nav>
 
-<h1>This Website is still in progress!</h1>
+<h1 class="rainbow__text">Explore Roger Wetter!</h1>
+
+
+<ul class="picture__grid">
+    <li class="picture__container">
+        <a href="Projects">
+            <img src="Pictures/code.webp" alt="Projects" class="picture">
+            <div class="overlay">
+                <div class="overlay__text">PROJECTS</div>
+            </div>
+        </a>
+    </li>
+    <li class="picture__container">
+        <a href="About">
+            <img src="Pictures/me.webp" alt="About" class="picture">
+            <div class="overlay">
+                <div class="overlay__text">ABOUT</div>
+            </div>
+        </a>
+    </li>
+    <li class="picture__container">
+        <a href="Contact">
+            <img src="Pictures/contact.webp" alt="Contact" class="picture">
+            <div class="overlay">
+                <div class="overlay__text">CONTACT</div>
+            </div>
+        </a>
+    </li>
+</ul>
 
 </body>
 </html>
