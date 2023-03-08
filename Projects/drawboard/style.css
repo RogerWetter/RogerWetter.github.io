@@ -23,10 +23,10 @@ body {
   background-color: #353536;
 }
 .canvas-drawing {
-  cursor: url('../icons/pencil.ico'), default;
+  cursor: url('../../icons/pencil.ico'), default;
 }
 .canvas-erasing {
-  cursor: url('../icons/eraser.ico'), default;
+  cursor: url('../../icons/eraser.ico'), default;
 }
 .buttons {
   position:absolute;
