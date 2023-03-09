@@ -105,7 +105,8 @@ h1 {
 
 .rainbow__text:hover {
   background-image: linear-gradient(to left, violet, #5c0c96, #6666b7, #397eaf,
-  #1ac9b8, rgba(101, 255, 228, 0.58), #a6f367);   -webkit-background-clip: text;
+  #1ac9b8, rgba(101, 255, 228, 0.58), #a6f367);
+  -webkit-background-clip: text;
   color: transparent;
 }
 
@@ -299,7 +300,7 @@ h1 {
   width: 100%;
   opacity: 0;
   transition: .5s ease;
-  //background-image: radial-gradient(closest-side, black, rgba(58, 141, 109, 0.58), black);
+/ / background-image: radial-gradient(closest-side, black, rgba(58, 141, 109, 0.58), black);
   background-color: rgba(0, 0, 0, 0.9);
   display: flex;
   align-items: center;
@@ -318,7 +319,7 @@ h1 {
   right: 0;
   height: 100%;
   width: 100%;
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0) 0%, rgba(0,0,0,1) 50%);
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 1) 50%);
 }
 
 .list__grid {
@@ -346,6 +347,18 @@ h1 {
 .picture__background {
   height: 300px;
   width: auto;
+}
+
+@media (max-width: 1000px) {
+  .about__grid {
+    margin: 11% 5%;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1%;
+  }
+
+  .list__title {
+    max-width: 15vw;
+  }
 }
 
 /*IPHONE IPAD*/
@@ -469,9 +482,11 @@ div {
   border-radius: 50%;
   margin: 1vmin;
 }
+
 .board .field .blue {
   background-color: #08174b;
 }
+
 .board .field .red {
   background-color: #5d1620;
 }
@@ -514,7 +529,8 @@ div {
   }
 
   to {
-    text-shadow: 0 0 20px #fff, 0 0 30px #d4af37, 0 0 40px #d4af37, 0 0 50px #d4af37, 0 0 60px #d4af37, 0 0 70px #d4af37, 0 0 80px #d4af37;    }
+    text-shadow: 0 0 20px #fff, 0 0 30px #d4af37, 0 0 40px #d4af37, 0 0 50px #d4af37, 0 0 60px #d4af37, 0 0 70px #d4af37, 0 0 80px #d4af37;
+  }
 }
 
 .board .field .glow-blue {
