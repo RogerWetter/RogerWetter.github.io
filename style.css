@@ -333,10 +333,14 @@ h1 {
   text-align: left;
   font-weight: bold;
   width: 200px;
+  max-width: 14vw;
+  overflow-wrap: break-word;
 }
 
 .list__item {
   text-align: left;
+  max-width: 14vw;
+  overflow-wrap: break-word;
 }
 
 .picture__background {
