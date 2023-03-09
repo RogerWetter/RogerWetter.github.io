@@ -370,6 +370,11 @@ h1 {
     opacity: 0;
     height: 0;
   }
+
+  .list__title, .list__item {
+    text-align: center;
+    max-width: 40vw;
+  }
 }
 
 /*
