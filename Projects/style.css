@@ -79,6 +79,7 @@ PROJECTS
   }
 
   .proj__links {
+    width: 9vh;
     font-size: small;
     padding: 0;
   }
