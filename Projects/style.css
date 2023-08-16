@@ -55,20 +55,27 @@ background-image: radial-gradient(closest-side, antiquewhite, black);
 
   body {
     margin: 0;
+    width: 100vw;
   }
 
   .proj__list {
     height: 70vh;
+    width: 100vw;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-gap: 6%;
-    margin: 5%;
+    column-gap: 6%;
+    row-gap: 0;
+    padding: 4%;
+    margin: 0;
     list-style: none;
     text-align: center;
+    align-items: center;
+    justify-content: center;
   }
 
   .proj__item {
     width: 9vh;
+    height: 15vh;
   }
 
   .proj__links {
@@ -80,6 +87,10 @@ background-image: radial-gradient(closest-side, antiquewhite, black);
     width: 9vh;
     height: 9vh;
     border-radius: 22%;
+  }
+
+  .appName {
+    position: relative;
   }
 }
 
