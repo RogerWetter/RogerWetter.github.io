@@ -65,7 +65,7 @@ background-image: radial-gradient(closest-side, antiquewhite, black);
     grid-template-columns: repeat(4, 1fr);
     column-gap: 6%;
     row-gap: 0;
-    padding: 4%;
+    padding:40vh 4% 4% 4%;
     margin: 0;
     list-style: none;
     text-align: center;
@@ -75,7 +75,7 @@ background-image: radial-gradient(closest-side, antiquewhite, black);
 
   .proj__item {
     width: 9vh;
-    height: 15vh;
+    height: 13vh;
     position: relative;
   }
 
