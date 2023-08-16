@@ -31,22 +31,21 @@ PROJECTS
   text-decoration: none;
   padding: 1rem;
   transition: background-color 0.3s, color 0.3s;
-  width: fit-content;
-  height: fit-content;
+  width: 8.5rem;
+  height: 10.5rem;
 }
 
-.proj__links:hover {
+.proj__links:hover .icons{
   //background-image: radial-gradient(closest-side, antiquewhite, black);
+  width: 6.5rem;
+  height: 6.5rem;
+  transition: 0.3s;
 }
 
 .icons {
   width: 5.5rem;
   height: 5.5rem;
   border-radius: 22%;
-}
-
-.icons:hover {
-background-image: radial-gradient(closest-side, antiquewhite, black);
 }
 
 
