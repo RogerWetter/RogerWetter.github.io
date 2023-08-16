@@ -87,6 +87,7 @@ background-image: radial-gradient(closest-side, antiquewhite, black);
   .icons {
     width: 9vh;
     height: 9vh;
+    margin: 0;
     border-radius: 22%;
   }
 
