@@ -76,6 +76,7 @@ background-image: radial-gradient(closest-side, antiquewhite, black);
   .proj__item {
     width: 9vh;
     height: 15vh;
+    position: relative;
   }
 
   .proj__links {
@@ -90,7 +91,8 @@ background-image: radial-gradient(closest-side, antiquewhite, black);
   }
 
   .appName {
-    position: relative;
+    position: absolute;
+    bottom: 0;
   }
 }
 
