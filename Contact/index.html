@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Contact</title>
     <link rel="icon" href="../icons/Initials.png">
+    <link rel="stylesheet" href="style.css?v=1">
     <link rel="stylesheet" href="../style.css?v=1">
 </head>
 <body>
@@ -16,13 +17,21 @@
     </div>
 </nav>
 
-<script src="../navbar.js"></script>
-
-<a href="mailto:info@roger-wetter.com" target="_blank">
+<div class="container">
     <h1 class="rainbow__text">
-        info@roger-wetter.com
+        Have a question or want to get in contact?
     </h1>
-</a>
+    <div class="row justify-content-center">
+        <form action="https://usebasin.com/f/85f855c61fe8" method="POST">
+            <input id="name" placeholder="Name" type="text" name="name" required>
+            <input id="email" placeholder="Email" type="email" name="email" required>
+            <textarea id="message" placeholder="Message" name="message" required></textarea>
+            <input id="submit" class="button" type="submit" value="SUBMIT">
+        </form>
+    </div>
+</div>
+
+<script src="../navbar.js"></script>
 
 </body>
 </html>
