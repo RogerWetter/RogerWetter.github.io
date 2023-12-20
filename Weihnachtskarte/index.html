@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weihnachtskarte</title>
+    <link href="https://fonts.cdnfonts.com/css/candy-cane" rel="stylesheet">
+    <style>
+      @import url('https://fonts.cdnfonts.com/css/candy-cane');
+      * {
+        width: 100vw;
+        align-items: center;
+        justify-content: center;
+        /* Center the image */
+        /* Do not repeat the image */
+        background: black url("1198113.jpg") no-repeat center;
+        background-size: 200vh;
+        color: antiquewhite;
+      }
+      /*IPHONE*/
+      @media only screen and (max-device-width: 500px) {
+        * {
+
+        }
+      }
+      body, h1, h2 {
+        --color1: #ffffff;
+        --color2: #ff0a0a;
+        font-family: "Open Sans", sans-serif;
+        /*font-family: 'Candy Cane (Unregistered)', sans-serif;*/
+        /*font-family: 'Comfortaa', cursive;*/
+        text-align: center;
+
+        background: repeating-linear-gradient(
+            45deg,
+            var(--color1),
+            var(--color1) 30px,
+            var(--color2) 30px,
+            var(--color2) 60px
+        );
+        background-clip: text;
+        color: transparent;
+        -webkit-background-clip: text;
+        animation: 40s linear 0s infinite move;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-size: xxx-large;
+        width: 100vw;
+        height: 100vh;
+        align-items: center;
+        justify-content: center;
+      }
+
+      @keyframes move {
+        from {
+          background-position: 0;
+        }
+        to {
+          background-position: 1000px;
+        }
+      }
+    </style>
+</head>
+<body>
+<h1>Weihnachtsmenu</h1>
+<h2>Vorspeise</h2>
+Nüsslisalat
+<h2>Hauptspeise</h2>
+Lasagne zweierlei
+<h2>Nachspeise</h2>
+Vermicelles
+</body>
+</html>
