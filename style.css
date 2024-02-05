@@ -4,17 +4,13 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: Arial, fantasy;
+  font-family: -apple-system, system-ui, sans-serif;
   text-align: center;
   color: antiquewhite;
 }
 
 body {
   background: black;
-}
-
-h1 {
-  color: antiquewhite;
 }
 
 .button {
@@ -56,12 +52,8 @@ h1 {
   cursor: pointer;
   text-decoration: none;
   font-size: 4rem;
-  font-family: "Baskerville", serif;
-}
-
-.navbar__logo:hover {
-  //font-size: 5rem;
-  //transition: font-size 0.3s;
+  font-family: Didot, 'Bodoni MT', 'Noto Serif Display', 'URW Palladio L', P052, Sylfaen, serif;
+  font-weight: bold;
 }
 
 #main-page-navbar-container {
@@ -131,11 +123,6 @@ h1 {
 /*IPAD*/
 @media only screen and (max-device-width: 900px) {
 
-  * {
-    text-align: center;
-    color: antiquewhite;
-  }
-
   .icons {
     height: 2.5rem;
     margin: 1rem;
@@ -145,11 +132,6 @@ h1 {
     justify-content: center;
     align-items: center;
     height: 100%;
-  }
-
-  #navbar__logo {
-    font-size: 80px;
-    font-family: Baskerville, serif;
   }
 
   .navbar__menu {
