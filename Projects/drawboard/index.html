@@ -3,30 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>drawboard</title>
+    <title>RW - Drawboard</title>
     <link rel="icon" href="../../icons/Initials.png">
+    <link rel="stylesheet" href="../../style.css?v=1">
     <link rel="stylesheet" href="style.css?v=1.003">
 </head>
 <body>
 <div class="canvas-container">
     <canvas id="canvas" class="canvas-drawing" width="100%" height="100%"></canvas>
-    <ul class="buttons">
-        <li>
-            <button class="button" id="clearBtn">C</button>
-        </li>
-        <li>
-            <button class="button" id="eraserBtn"><img class="buttonImage" src="../../icons/eraser.png" alt=""></button>
-        </li>
-        <li>
-            <input type="color" class="button" id="colorPicker" value="#ffffff">
-        </li>
-        <li>
-            <input type="range" class="button" id="lineWidthPicker" value=5
-            min=1 max="20">
-        </li>
-    </ul>
+    <div id="container">
+        <nav class="navbar">
+            <div class="navbar__container">
+                <a href="/" class="navbar__logo">RW</a>
+                <ul class="navbar__menu"></ul>
+            </div>
+        </nav>
+        <ul class="buttons">
+            <li>
+                <button class="button" id="clearBtn">C</button>
+            </li>
+            <li>
+                <button class="button" id="eraserBtn"><img class="buttonImage" src="../../icons/eraser.png" alt=""></button>
+            </li>
+            <li>
+                <input type="color" class="button" id="colorPicker" value="#ffffff">
+            </li>
+            <li>
+                <input type="range" class="button" id="lineWidthPicker" value=5
+                       min=1 max="20">
+            </li>
+        </ul>
+    </div>
 </div>
-
+<script src="../../navbar.js"></script>
 <script src="drawboard.js?v=1.002"></script>
 </body>
 </html>
