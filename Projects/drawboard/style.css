@@ -100,6 +100,10 @@ li {
 /*IPAD / IPHONE*/
 @media only screen and (max-device-width: 900px) {
 
+  body {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
   .navbar__container {
     background: unset;
   }
