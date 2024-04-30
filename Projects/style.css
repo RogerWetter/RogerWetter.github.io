@@ -36,7 +36,6 @@ PROJECTS
 }
 
 .proj__links:hover .icons{
-  //background-image: radial-gradient(closest-side, antiquewhite, black);
   width: 6.5rem;
   height: 6.5rem;
   transition: 0.3s;
@@ -58,35 +57,44 @@ PROJECTS
   }
 
   .proj__list {
-    height: 70vh;
+    //height: 105vh;
+    position: relative;
+    justify-content: space-evenly;
+    margin: calc(60dvh - 150px) 0 0;
+    padding: 0 4vw;
     width: 100vw;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    column-gap: 6%;
+    column-gap: 4vw;
     row-gap: 0;
-    padding:40vh 4% 4% 4%;
-    margin: 0;
+    //
     list-style: none;
     text-align: center;
     align-items: center;
-    justify-content: center;
+    //justify-content: center;
   }
 
   .proj__item {
-    width: 9vh;
-    height: 13vh;
+    width: min(9dvh, 20vw);
+    height: 13dvh;
     position: relative;
   }
 
+  .proj__links:hover .icons {
+    width: min(9dvh, 20vw);
+    height: min(9dvh, 20vw);
+    transition: unset;
+  }
+
   .proj__links {
-    width: 9vh;
-    font-size: small;
+    width: 100%;
+    font-size: x-small;
     padding: 0;
   }
 
   .icons {
-    width: 9vh;
-    height: 9vh;
+    width: min(9dvh, 20vw);
+    height: min(9dvh, 20vw);
     margin: 0;
     border-radius: 22%;
   }

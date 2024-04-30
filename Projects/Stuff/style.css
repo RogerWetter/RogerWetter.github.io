@@ -1,0 +1,30 @@
+main {
+  width: 80vw;
+  min-width: 500px;
+  //max-width: 1000px;
+  margin: auto auto 100px;
+}
+
+.figma-frame {
+  width: 100%;
+  height: 70vh;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+h2, p {
+  margin: 1em;
+}
+
+.red_circle {
+  height: 0.5em;
+  padding: 0.1em;
+  margin: 0.1em;
+}
+
+/*IPHONE IPAD*/
+@media only screen and (max-device-width: 900px) {
+  main {
+    width: 100vw;
+    min-width: unset;
+  }
+}

@@ -1,0 +1,30 @@
+main {
+  width: 50vw;
+  min-width: 500px;
+  max-width: 1000px;
+  margin: auto auto 100px;
+}
+
+h2, p {
+  margin: 1em;
+  text-align: left;
+}
+
+.app_pictures_container {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.app_picture {
+  width: 40%;
+  max-width: 300px;
+}
+
+/*IPHONE IPAD*/
+@media only screen and (max-device-width: 900px) {
+  main {
+    width: 100vw;
+    min-width: unset;
+  }
+}
