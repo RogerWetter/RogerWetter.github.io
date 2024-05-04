@@ -24,7 +24,11 @@ h2, p {
 /*IPHONE IPAD*/
 @media only screen and (max-device-width: 900px) {
   main {
-    width: 100vw;
+    width: 100%;
     min-width: unset;
+  }
+
+  .navbar {
+    width: 100%;
   }
 }
