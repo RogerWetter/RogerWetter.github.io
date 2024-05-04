@@ -28,7 +28,12 @@ h2, p {
     min-width: unset;
   }
 
-  .navbar {
-    width: 100%;
+  .figma-frame {
+    height: 58dvh;
+  }
+  @media only screen and (max-device-height: 920px) {
+    .figma-frame {
+      height: 53dvh;
+    }
   }
 }
