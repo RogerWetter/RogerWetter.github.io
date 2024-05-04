@@ -26,14 +26,25 @@ h2, p {
   main {
     width: 100%;
     min-width: unset;
+    margin: 0;
   }
-
-  .figma-frame {
-    height: 58dvh;
-  }
-  @media only screen and (max-device-height: 920px) {
+  /* Safari 9+ */
+  @supports (-webkit-hyphens:none) {
+    /* Iphone Max */
     .figma-frame {
-      height: 53dvh;
+      height: 64.5dvh;
+    }
+    @media only screen and (max-device-height: 920px) {
+      /* Iphone */
+      .figma-frame {
+        height: 61dvh;
+      }
+      @media only screen and (max-device-height: 840px) {
+        /* Iphone mini*/
+        .figma-frame {
+          height: 59dvh;
+        }
+      }
     }
   }
 }
