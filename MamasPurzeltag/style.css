@@ -1,0 +1,93 @@
+@charset "UTF-8";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, system-ui, sans-serif;
+  text-align: center;
+}
+
+header {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+@media (prefers-color-scheme: light) {
+  body {
+    color: #153448;
+    background: antiquewhite;
+  }
+
+  .button {
+    background-color: #3C5B6F;
+    color: antiquewhite;
+  }
+
+  .button:hover {
+    background-color: #153448;
+    color: antiquewhite;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: black;
+    color: antiquewhite;
+  }
+
+  .button {
+    background-color: antiquewhite;
+    color: #153448;
+  }
+
+  .button:hover {
+    background-color: #153448;
+    color: antiquewhite;
+  }
+}
+
+main {
+  font-family: -apple-system, system-ui, sans-serif;
+  height: 100svh;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  padding: 1em;
+}
+
+h2, p {
+  margin: 1em;
+}
+
+.button {
+  margin: auto;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  padding: 1em;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  scale: 1.1;
+}
+
+
+/*IPHONE IPAD*/
+@media only screen and (max-device-width: 900px) {
+  main {
+    width: 100svw;
+    min-width: unset;
+  }
+}
