@@ -20,6 +20,12 @@ body {
   color: black;
 }
 
+header {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
 .navbar {
   background: rgb(0,0,0);
   background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 25%, rgb(52, 50, 50) 100%);
@@ -226,11 +232,20 @@ body {
 }
 
 .picture__grid {
-  margin: 10% 3%;
+  margin: 20vh 3%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 2%;
   list-style-type: none;
+}
+
+@media (max-width: 800px) and (min-height: 750px){
+  .picture__grid {
+    margin: 5vw 15vw;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 2%;
+  }
 }
 
 .overlay {

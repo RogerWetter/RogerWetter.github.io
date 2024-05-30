@@ -8,7 +8,10 @@ PROJECTS
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 0;
-  margin: 5% 15%;
+  /*margin: 5% 15vw;*/
+  /*margin: 5% 15%;*/
+  margin: 5% auto;
+  max-width: 70vw;
   list-style: none;
   text-align: center;
 }
@@ -29,9 +32,11 @@ PROJECTS
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  padding: 1rem;
+  /*padding: 1rem;*/
   transition: background-color 0.3s, color 0.3s;
-  width: 8.5rem;
+  max-width: 8.5rem;
+  width: 15vw;
+  min-width: 6rem;
   height: 10.5rem;
 }
 
@@ -67,11 +72,9 @@ PROJECTS
     grid-template-columns: repeat(4, 1fr);
     column-gap: 4vw;
     row-gap: 0;
-    //
     list-style: none;
     text-align: center;
     align-items: center;
-    //justify-content: center;
   }
 
   .proj__item {
@@ -111,7 +114,13 @@ div {
 }
 
 .text {
-  margin: 10px;
+  width: 80vmin;
+  margin: 2rem auto;
+}
+
+#output {
+  height: auto;
+  margin: auto;
 }
 
 .board {
