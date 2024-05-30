@@ -144,6 +144,11 @@ body {
   margin-right: 10px;
 }
 
+.horizontal {
+  display: flex;
+  flex-direction: row;
+}
+
 /*IPAD*/
 @media only screen and (max-device-width: 900px) {
 

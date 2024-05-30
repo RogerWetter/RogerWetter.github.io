@@ -18,7 +18,8 @@ h2, p {
 
 .app_picture {
   width: 40%;
-  max-width: 300px;
+  max-width: 430px;
+  border-radius: 12.8% / calc(12.8% * 9/19.5);
 }
 
 /*IPHONE IPAD*/
