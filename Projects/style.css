@@ -8,8 +8,6 @@ PROJECTS
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 0;
-  /*margin: 5% 15vw;*/
-  /*margin: 5% 15%;*/
   margin: 5% auto;
   max-width: 70vw;
   list-style: none;
@@ -68,6 +66,7 @@ PROJECTS
     margin: calc(60dvh - 150px) 0 0;
     padding: 0 4vw;
     width: 100vw;
+    max-width: unset;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     column-gap: 4vw;
