@@ -63,27 +63,27 @@ PROJECTS
     position: relative;
     align-items: center;
     justify-content: space-evenly;
-    margin: calc(100dvh - 150px - 3*(18.75vw + 5dvh) - 5dvh) 0 0;
-    padding: 0 5vw;
+    margin: calc(100dvh - 150px - 3*(15vw + 5dvh) - 5dvh) 0 0;
+    padding: 0 8vw;
     width: 100vw;
     max-width: unset;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    column-gap: 5vw;
+    column-gap: 8vw;
     row-gap: 0;
     list-style: none;
     text-align: center;
   }
 
   .proj__item {
-    width: 18.75vw;
-    height: calc(18.75vw + 5dvh);
+    width: 15vw;
+    height: calc(15vw + 5dvh);
     position: relative;
   }
 
   .proj__links:hover .icons {
-    width: 18.75vw;
-    height: 18.75vw;
+    width: 15vw;
+    height: 15vw;
     transition: unset;
   }
 
@@ -94,8 +94,8 @@ PROJECTS
   }
 
   .icons {
-    width: 18.75vw;
-    height: 18.75vw;
+    width: 15vw;
+    height: 15vw;
     margin: 0;
     border-radius: 22%;
   }
@@ -103,6 +103,7 @@ PROJECTS
   .appName {
     position: absolute;
     bottom: 0;
+    width: 20vw;
   }
 }
 
