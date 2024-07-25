@@ -50,76 +50,33 @@ PROJECTS
   border-radius: 22%;
 }
 
-
-/*IPHONE IPAD*/
-@media only screen and (max-device-width: 900px) {
-
-  body {
-    margin: 0;
-    width: 100vw;
-  }
-
-  .proj__list {
-    position: relative;
-    align-items: center;
-    justify-content: space-evenly;
-    margin: calc(100dvh - 150px - 3*(15vw + 5dvh) - 5dvh) 0 0;
-    padding: 0 8vw;
-    width: 100vw;
-    max-width: unset;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    column-gap: 8vw;
-    row-gap: 0;
-    list-style: none;
-    text-align: center;
-  }
-
-  .proj__item {
-    width: 15vw;
-    height: calc(15vw + 5dvh);
-    position: relative;
-  }
-
-  .proj__links:hover .icons {
-    width: 15vw;
-    height: 15vw;
-    transition: unset;
-  }
-
-  .proj__links {
-    width: 100%;
-    font-size: x-small;
-    padding: 0;
-  }
-
-  .icons {
-    width: 15vw;
-    height: 15vw;
-    margin: 0;
-    border-radius: 22%;
-  }
-
-  .appName {
-    position: absolute;
-    bottom: 0;
-    width: 20vw;
-  }
-}
-
-
 div {
   box-sizing: border-box;
 }
 
-.text {
-  width: 80vmin;
-  margin: 2rem auto;
+.connect4__header {
+  width: 84vmin;
+  margin: 1em auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.connect4__header__buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.connect4__header__buttons .button {
+  margin: 1em;
 }
 
 #output {
   height: auto;
-  margin: auto;
+  margin: 1em;
 }
 
 .board {
@@ -204,5 +161,69 @@ div {
 
   to {
     box-shadow: 0 0 20px #fff, 0 0 30px #d4af37, 0 0 40px #d4af37, 0 0 50px #d4af37, 0 0 60px #d4af37, 0 0 70px #d4af37, 0 0 80px #d4af37;
+  }
+}
+
+
+/*IPHONE IPAD*/
+@media only screen and (max-device-width: 900px) {
+
+  body {
+    margin: 0;
+    width: 100vw;
+  }
+
+  .proj__list {
+    position: relative;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: calc(100dvh - 150px - 3*(15vw + 5dvh) - 5dvh) 0 0;
+    padding: 0 8vw;
+    width: 100vw;
+    max-width: unset;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 8vw;
+    row-gap: 0;
+    list-style: none;
+    text-align: center;
+  }
+
+  .proj__item {
+    width: 15vw;
+    height: calc(15vw + 5dvh);
+    position: relative;
+  }
+
+  .proj__links:hover .icons {
+    width: 15vw;
+    height: 15vw;
+    transition: unset;
+  }
+
+  .proj__links {
+    width: 100%;
+    font-size: x-small;
+    padding: 0;
+  }
+
+  .icons {
+    width: 15vw;
+    height: 15vw;
+    margin: 0;
+    border-radius: 22%;
+  }
+
+  .appName {
+    position: absolute;
+    bottom: 0;
+    width: 20vw;
+  }
+
+  .connect4__header {
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
   }
 }
