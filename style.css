@@ -36,10 +36,10 @@ header {
 }
 
 #theme-toggle-case {
-  width: 300px;
-  height: 140px;
+  width: 100px;
+  height: 50px;
   background-color: var(--color-fg);
-  border-radius: 70px;
+  border-radius: 35px;
   display: flex;
   align-items: center;
   position: absolute;
@@ -51,20 +51,80 @@ header {
 }
 
 #theme-toggle {
-  width: 100px;
-  height: 100px;
-  margin-left: 180px;
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  margin-left: 60px;
   background-color: var(--color-bg);
-  border-radius: 50px;
+  border-radius: 15px;
   transition: margin-left 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
 }
 
-[data-theme="dark"] #theme-toggle {
-  margin-left: 20px;
+#theme-icon {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-image: url('icons/sun-icon.svg');
+  background-size: 80%;
+  background-repeat: no-repeat;
+  background-position: center;
+
 }
 
-[data-theme="light"] #theme-toggle {
-  margin-left: 180px;
+[data-theme="dark"] {
+  #theme-toggle {
+    margin-left: 10px;
+  }
+
+  #theme-icon {
+    margin-left: 60px;
+    background-image: url('icons/moon-icon.svg');
+  }
+}
+
+[data-theme="light"] {
+  #theme-toggle {
+    margin-left: 60px;
+  }
+
+  #theme-icon {
+    margin-left: 10px;
+    background-image: url('icons/sun-icon.svg');
+  }
+}
+
+@media only screen and (max-device-width: 500px) {
+  #theme-toggle-case {
+    width: 50px;
+    height: 50px;
+  }
+
+  #theme-toggle {
+    display: none;
+  }
+
+  #theme-icon {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-image: url('icons/sun-icon.svg');
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+
+  }
+
+  [data-theme="dark"] {
+    #theme-icon {
+      background-image: url('icons/moon-icon.svg');
+    }
+  }
+
+  [data-theme="light"] {
+    #theme-icon {
+      background-image: url('icons/sun-icon.svg');
+    }
+  }
 }
 
 .navbar {
@@ -280,7 +340,7 @@ header {
   list-style-type: none;
 }
 
-@media (max-width: 800px) and (min-height: 750px){
+@media (max-width: 800px) and (min-height: 750px) {
   .picture__grid {
     margin: 5vw 15vw;
     display: grid;
@@ -345,4 +405,5 @@ header {
   }
 
 }
+
 
