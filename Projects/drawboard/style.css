@@ -35,7 +35,7 @@ body {
 }
 
 .navbar, .buttons {
-  background: #212121;
+  background: var(--color-bg);
   height: 120px;
   border-bottom: black 5px solid;
 }

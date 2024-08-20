@@ -5,19 +5,28 @@
   margin: 0;
   padding: 0;
   font-family: -apple-system, system-ui, sans-serif;
-  text-align: center;
-  color: antiquewhite;
+  /*text-align: center;*/
+  /*color: antiquewhite;*/
+  transition: background-color 0.8s;
+}
+
+[data-theme="light"] {
+  --color-bg: antiquewhite;
+  --color-bgl: #ffffff;
+  --color-fg: #000000;
+  --color-s: #67f3bd;
+}
+
+[data-theme="dark"] {
+  --color-bg: #000000;
+  --color-bgl: #1a1a1a;
+  --color-fg: antiquewhite;
+  --color-s: #67f3bd;
 }
 
 body {
-  background: black;
-}
-
-.button {
-  background-color: antiquewhite;
-  border-radius: 5px;
-  margin: auto;
-  color: black;
+  background-color: var(--color-bg);
+  color: var(--color-fg);
 }
 
 header {
@@ -26,12 +35,106 @@ header {
   z-index: 999;
 }
 
+#theme-toggle-case {
+  width: 100px;
+  height: 50px;
+  background-color: var(--color-fg);
+  border-radius: 35px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 999;
+  margin: 0;
+  overflow: hidden;
+}
+
+#theme-toggle {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  margin-left: 60px;
+  background-color: var(--color-bg);
+  border-radius: 15px;
+  transition: margin-left 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+#theme-icon {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-image: url('icons/sun-icon.svg');
+  background-size: 80%;
+  background-repeat: no-repeat;
+  background-position: center;
+
+}
+
+[data-theme="dark"] {
+  #theme-toggle {
+    margin-left: 10px;
+  }
+
+  #theme-icon {
+    margin-left: 60px;
+    background-image: url('icons/moon-icon.svg');
+  }
+}
+
+[data-theme="light"] {
+  #theme-toggle {
+    margin-left: 60px;
+  }
+
+  #theme-icon {
+    margin-left: 10px;
+    background-image: url('icons/sun-icon.svg');
+  }
+}
+
+@media only screen and (max-device-width: 500px) {
+  #theme-toggle-case {
+    width: 50px;
+    height: 50px;
+  }
+
+  #theme-toggle {
+    display: none;
+  }
+
+  #theme-icon {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-image: url('icons/sun-icon.svg');
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+
+  }
+
+  [data-theme="dark"] {
+    #theme-icon {
+      margin-left: 10px;
+      background-image: url('icons/moon-icon.svg');
+    }
+  }
+
+  [data-theme="light"] {
+    #theme-icon {
+      margin-left: 10px;
+      background-image: url('icons/sun-icon.svg');
+    }
+  }
+}
+
 .navbar {
-  background: rgb(0,0,0);
-  background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 25%, rgb(52, 50, 50) 100%);
+  background: var(--color-bg);
+  /*background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 25%, rgb(52, 50, 50) 100%);*/
   display: flex;
   justify-content: center;
-  align-content: center;
+  align-items: center;
   position: sticky;
   top: 0;
   z-index: 999;
@@ -48,8 +151,8 @@ header {
 }
 
 .navbar__logo {
-  background-color: antiquewhite;
-  background-image: linear-gradient(to top, #67f3bd 0%, #faebd7 100%);
+  background-color: var(--color-fg);
+  background-image: linear-gradient(to top, var(--color-s) 0%, var(--color-fg) 100%);
   background-size: 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -91,8 +194,8 @@ header {
 
 .navbar__links {
   border-radius: 1rem;
-  border: 1px solid rgba(250, 235, 215, 0.5);
-  color: antiquewhite;
+  border: 1px solid var(--color-fg);
+  color: var(--color-fg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -103,8 +206,8 @@ header {
 }
 
 .navbar__links:hover {
-  background-color: antiquewhite;
-  background-image: linear-gradient(to top, #67f3bd 0%, #faebd7 100%);
+  background-color: var(--color-fg);
+  background-image: linear-gradient(to top, var(--color-s) 0%, var(--color-fg) 100%);
   background-size: 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -132,8 +235,8 @@ header {
   align-items: center;
   width: fit-content;
   padding: 1em;
-  background-color: antiquewhite;
-  color: black;
+  background-color: var(--color-fg);
+  color: var(--color-bg);
   border-radius: 10px;
   text-decoration: none;
   font-weight: bold;
@@ -141,8 +244,8 @@ header {
 }
 
 .button:hover {
-  background-color: #1a1a1a;
-  color: antiquewhite;
+  background-color: var(--color-bgl);
+  color: var(--color-fg);
 }
 
 .button-icon {
@@ -186,7 +289,7 @@ header {
 /*IPHONE*/
 @media only screen and (max-device-width: 500px) {
   .navbar {
-    background: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, black 25%);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, var(--color-bg) 25%);
     height: fit-content;
     width: 100vw;
   }
@@ -239,7 +342,7 @@ header {
   list-style-type: none;
 }
 
-@media (max-width: 800px) and (min-height: 750px){
+@media (max-width: 800px) and (min-height: 750px) {
   .picture__grid {
     margin: 5vw 15vw;
     display: grid;
@@ -258,7 +361,7 @@ header {
   width: 100%;
   opacity: 0;
   transition: .5s ease;
-  background-image: radial-gradient(closest-side, black, rgba(58, 141, 109, 0.58), black);
+  background-image: radial-gradient(closest-side, var(--color-bg), rgba(58, 141, 109, 0.58), var(--color-bg));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -269,7 +372,7 @@ header {
 }
 
 .overlay__text {
-  color: antiquewhite;
+  color: var(--color-fg);
   text-decoration: none;
   font-size: xx-large;
   font-weight: bold;
@@ -286,7 +389,7 @@ header {
 
   .overlay {
     opacity: 1;
-    background-image: radial-gradient(closest-side, black, rgba(58, 141, 109, 0.3), rgba(0, 0, 0, 0));
+    background-image: radial-gradient(closest-side, var(--color-bg), rgba(58, 141, 109, 0.3), rgba(0, 0, 0, 0));
   }
 
   .overlay__text {
@@ -304,4 +407,5 @@ header {
   }
 
 }
+
 
