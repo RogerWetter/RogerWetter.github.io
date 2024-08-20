@@ -116,12 +116,14 @@ header {
 
   [data-theme="dark"] {
     #theme-icon {
+      margin-left: 10px;
       background-image: url('icons/moon-icon.svg');
     }
   }
 
   [data-theme="light"] {
     #theme-icon {
+      margin-left: 10px;
       background-image: url('icons/sun-icon.svg');
     }
   }
