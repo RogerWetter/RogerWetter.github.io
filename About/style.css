@@ -35,8 +35,7 @@
   width: 130%;
   opacity: 0;
   transition: .5s ease;
-/ / background-image: radial-gradient(closest-side, black, rgba(58, 141, 109, 0.58), black);
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: var(--color-bg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -54,7 +53,7 @@
   right: 0;
   height: 100%;
   width: 100%;
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 1) 50%);
+  //background-image: radial-gradient(circle, rgba(255, 255, 255, 0) 0%, var(--color-bg) 50%);
 }
 
 .list__grid {

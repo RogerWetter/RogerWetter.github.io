@@ -24,7 +24,7 @@ PROJECTS
 }
 
 .proj__links {
-  color: antiquewhite;
+  color: var(--color-fg);
   display: flex;
   flex-direction: column;
   align-items: center;

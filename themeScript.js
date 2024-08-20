@@ -18,10 +18,12 @@ function updateThemeOnHtmlEl({ theme }) {
   document.querySelector("html").setAttribute("data-theme", theme);
 
   const metaThemeColor = document.querySelector('meta[name="theme-color"]');
-  if (theme === "dark") {
-    metaThemeColor.setAttribute("content", "#000000");
-  } else {
-    metaThemeColor.setAttribute("content", "#FAEBD7");
+  if (metaThemeColor) {
+    if (theme === "dark") {
+      metaThemeColor.setAttribute("content", "#000000");
+    } else {
+      metaThemeColor.setAttribute("content", "#FAEBD7");
+    }
   }
 }
 
