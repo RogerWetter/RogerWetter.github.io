@@ -128,7 +128,7 @@
 .numbertext {
   position: absolute;
   bottom: 0;
-  left: 50%;
+  right: calc(50% - 140px);
 }
 
 .picture__background {
@@ -184,5 +184,18 @@
   .list__title, .list__item {
     text-align: center;
     max-width: 40vw;
+  }
+
+  .prev,
+  .next {
+    bottom: 0;
+  }
+
+  .prev {
+    left: calc(50% - 40px);
+  }
+
+  .next {
+    right: calc(50% - 180px);
   }
 }
