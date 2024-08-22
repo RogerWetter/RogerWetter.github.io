@@ -1,3 +1,11 @@
+
+#theme-toggle-case {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+}
+
 .about__container {
   position: relative;
 }
@@ -53,7 +61,6 @@
   right: 0;
   height: 100%;
   width: 100%;
-  //background-image: radial-gradient(circle, rgba(255, 255, 255, 0) 0%, var(--color-bg) 50%);
 }
 
 .list__grid {
@@ -67,8 +74,6 @@
 .list__title {
   text-align: left;
   font-weight: bold;
-//width: 200px;
-//max-width: 14vw;
   overflow-wrap: break-word;
 }
 
@@ -94,36 +99,36 @@
 
 .prev,
 .next {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(130, 130, 130, 0.3);
   cursor: pointer;
-  //position: absolute;
-  //bottom: 40px;
-  width: auto;
+  position: absolute;
+  bottom: 30px;
   padding: 5px;
-  color: white;
   font-weight: bold;
   font-size: 20px;
   border-radius: 3px;
   user-select: none;
   -webkit-user-select: none;
+  width: 25px;
 }
 
 .prev {
-  //left: 50%;
+  left: calc(50% - 20px);
 }
 
 .next {
-  //right: calc(50% - 100px);
+  right: calc(50% - 150px);
 }
 
 .prev:hover,
 .next:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.4);
 }
 
 .numbertext {
   position: absolute;
   bottom: 0;
+  left: 50%;
 }
 
 .picture__background {
