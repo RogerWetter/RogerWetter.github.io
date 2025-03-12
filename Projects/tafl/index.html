@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tafl</title>
+    <style>
+        :root {
+            --board-bg: #f4d47c;
+            --board-border: black;
+            --board-border-width: 2px;
+            --tile-border: black;
+            --tile-border-width: 1px;
+            --tile-size: 8vmin; /* Platzhalter, wird per JS gesetzt  */
+            --board-border-radius: 5px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            height: 65px;
+            padding: 10px;
+            text-align: center;
+            justify-content: center;
+            background: #989898;
+        }
+
+        .board {
+            display: grid;
+            border: var(--board-border-width) solid var(--board-border);
+            background: var(--board-bg) url("img/Tafl.png") no-repeat center;
+            background-size: 100%;
+            border-radius: var(--board-border-radius);
+        }
+
+        .tile {
+            width: var(--tile-size);
+            height: var(--tile-size);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            border: var(--tile-border-width) solid var(--tile-border);
+        }
+
+        button {
+            height: fit-content;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            background: #555;
+            color: white;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="controls">
+            <p>Attacker: <span id="attacker-time">10:00</span></p>
+            <p>Defender: <span id="defender-time">10:00</span></p>
+        </div>
+
+        <div class="board" id="board"></div>
+
+        <div class="controls">
+            <button onclick="prevMove()">⬅ Zug zurück</button>
+            <button onclick="nextMove()">➡ Zug vor</button>
+            <button onclick="resetMoves()">🔄 Alle zurück</button>
+            <button onclick="restartGame()">🔁 Spiel neu starten</button>
+            <button onclick="openSettings()">⚙ Einstellungen</button>
+        </div>
+    </div>
+
+    <script>
+        const boardSize = 11;
+
+        function setTileSize(size) {
+            let borderSize = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--board-border-width'))*2 / window.innerHeight * 100;
+            let controls = document.querySelectorAll(".controls");
+            let totalHeight = 0;
+            
+            controls.forEach(control => {
+                totalHeight += control.offsetHeight; // Adds the element's height
+            });
+
+            console.log(borderSize);
+            let controlsSize = 130 / window.innerHeight * 100;
+            let tileSize = (100-borderSize-controlsSize) / size;
+            document.documentElement.style.setProperty('--tile-size', tileSize + "vmin");
+        }
+
+        function createBoard(size) {
+            setTileSize(size);
+            const board = document.getElementById("board");
+            board.style.gridTemplateColumns = `repeat(${size}, var(--tile-size))`;
+            board.style.gridTemplateRows = `repeat(${size}, var(--tile-size))`;
+            board.innerHTML = ""; // Reset Board
+
+            for (let i = 0; i < size * size; i++) {
+                let tile = document.createElement("div");
+                tile.classList.add("tile");
+                board.appendChild(tile);
+            }
+        }
+
+        function prevMove() {
+            alert("Zug zurück geht noch nicht!");
+        }
+
+        function nextMove() {
+            alert("Zug vorwärts geht noch nicht!");
+        }
+
+        function resetMoves() {
+            alert("Alle Züge zurücksetzen!");
+        }
+
+        function restartGame() {
+            alert("Spiel wird neu gestartet!");
+        }
+
+        function openSettings() {
+            alert("Einstellungen öffnen!");
+        }
+
+        createBoard(boardSize);
+    </script>
+
+</body>
+</html>
