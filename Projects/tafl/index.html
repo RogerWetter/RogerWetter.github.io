@@ -67,6 +67,26 @@
             border: var(--tile-border-width) solid var(--tile-border);
         }
 
+        .piece {
+            width: 100%;
+            height: 100%;
+        }
+
+        .king {
+            background: url(img/wk.png) no-repeat center;
+            background-size: contain;
+        }
+
+        .defender {
+            background: url(img/wr.png) no-repeat center;
+            background-size: contain;
+        }
+
+        .attacker {
+            background: url(img/br.png) no-repeat center;
+            background-size: contain;
+        }
+
         button {
             height: fit-content;
             padding: 10px;
@@ -104,16 +124,17 @@
         <div class="board" id="board"></div>
 
         <div class="controls">
-            <button onclick="prevMove()">⬅ Zug zurück</button>
-            <button onclick="nextMove()">➡ Zug vor</button>
-            <button onclick="resetMoves()">🔄 Alle zurück</button>
-            <button onclick="restartGame()">🔁 Spiel neu starten</button>
-            <button onclick="openSettings()">⚙ Einstellungen</button>
+            <button onclick="prevMove()">◀️</button>
+            <button onclick="nextMove()">▶️</button>
+            <button onclick="openSettings()">⚙️</button>
         </div>
     </div>
 
     <script>
         const boardSize = 11;
+        const posKing = 60;
+        const posWs = [38, 48, 49, 50, 58, 59, 61, 62, 70, 71, 72, 82]
+        const posBs = [3, 4, 5, 6, 7, 16, 33, 43, 44, 54, 55, 56, 64, 65, 66, 76, 77, 87, 104, 113, 114, 115, 116, 117]
 
         function setTileSize(size) {
             let borderSize = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--board-border-width'))*2 / window.innerHeight * 100;
@@ -140,6 +161,19 @@
             for (let i = 0; i < size * size; i++) {
                 let tile = document.createElement("div");
                 tile.classList.add("tile");
+                if (posKing == i) {
+                    let king = document.createElement("div");
+                    king.classList.add("piece", "king");
+                    tile.appendChild(king);
+                } else if (posWs.includes(i)){
+                    let defender = document.createElement("div");
+                    defender.classList.add("defender", "piece");
+                    tile.appendChild(defender);
+                } else if (posBs.includes(i)) {
+                    let attacker = document.createElement("div");
+                    attacker.classList.add("attacker", "piece");
+                    tile.appendChild(attacker);
+                }
                 board.appendChild(tile);
             }
         }
