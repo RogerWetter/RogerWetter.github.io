@@ -74,6 +74,7 @@
 .list__title {
   text-align: left;
   font-weight: bold;
+  font-style: monospace;
   overflow-wrap: break-word;
 }
 
