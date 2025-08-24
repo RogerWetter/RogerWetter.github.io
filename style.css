@@ -48,6 +48,10 @@ a {
   text-decoration: none;
 }
 
+a:hover {
+  text-decoration: underline;
+}
+
 #theme-toggle-case {
   width: 100px;
   height: 50px;
