@@ -335,9 +335,9 @@ header {
 }
 
 .picture__grid {
-  margin: 20vh 3%;
+  margin: 20vh 15%;
   display: flex;
-  gap: 5%;
+  gap: 7%;
   list-style-type: none;
 }
 
