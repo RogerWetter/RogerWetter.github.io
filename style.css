@@ -346,7 +346,7 @@ header {
     margin: 5vw 15vw;
     display: flex;
     flex-direction: column;
-    gap: 2%;
+    gap: 7vh;
   }
 }
 
@@ -384,7 +384,7 @@ header {
     margin: 5% 5%;
     display: flex;
     flex-wrap: wrap;
-    gap: 5%;
+    gap: 5vh;
   }
 
   .overlay {
