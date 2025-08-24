@@ -1,0 +1,11 @@
+Privacy Notice
+
+This website does not use cookies or any other tracking technologies.
+
+We only collect information that you actively and voluntarily provide when sending us a message through the contact form on this website. The information you provide will be used solely to process and respond to your inquiry. Your data will not be shared with third parties without your consent.
+
+Our hosting provider (GitHub Inc.) automatically creates standard web server log files for each visit to this website, which may include: IP address, referrer URL, date and time of the request, time zone difference from Greenwich Mean Time, requested content, HTTP status code, amount of data transferred, the website from which the request originates, as well as information about browser and operating system. These data are processed for the following purposes: ensuring a smooth connection to the website and evaluating system security and stability. There is no tracking, and we do not have direct access to these log files.
+
+If you have any questions regarding the processing of your personal data, please contact me through the contact form on this website.
+
+— Roger Wetter
