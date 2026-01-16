@@ -3,7 +3,7 @@
 const navItems = [
   { name: 'Projects', link: '/Projects' },
   // { name: 'About', link: '/About' },
-  { name: 'Contact', link: '/Contact' }
+  // { name: 'Contact', link: '/Contact' }
 ];
 
 const navbarContainer = document.querySelector('.navbar__menu');
