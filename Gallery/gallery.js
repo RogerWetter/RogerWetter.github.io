@@ -53,7 +53,7 @@ const loadGallery = async () => {
         name: file.name,
         url: file.download_url
       }))
-      .sort((a, b) => b.name.localeCompare(a.name));
+      .sort((a, b) => a.name.localeCompare(b.name));
 
     renderImages(images);
   } catch (error) {
