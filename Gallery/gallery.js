@@ -13,8 +13,13 @@ const isSupportedImage = (name) =>
 const isSafeDataImage = (url) => /^data:image\/(png|jpeg|jpg|webp|gif|avif);base64,/i.test(url);
 
 let renderedItems = [];
-const imageWord = (count) => count === 1 ? 'Bild' : 'Bilder';
+const getImageWordForCount = (count) => count === 1 ? 'Bild' : 'Bilder';
 const getRandomItem = (items) => items[Math.floor(Math.random() * items.length)];
+const isValidDrawboardImage = (image) =>
+  image &&
+  typeof image.name === 'string' &&
+  typeof image.url === 'string' &&
+  isSafeDataImage(image.url);
 
 const renderImages = (images) => {
   galleryGrid.innerHTML = '';
@@ -75,8 +80,8 @@ const renderImages = (images) => {
   });
 
   galleryStatus.textContent = ownImages
-    ? `Es wurden ${images.length} ${imageWord(images.length)} geladen (${ownImages} von dir erstellt).`
-    : `${images.length} ${imageWord(images.length)} geladen.`;
+    ? `Es wurden ${images.length} ${getImageWordForCount(images.length)} geladen (${ownImages} von dir erstellt).`
+    : `${images.length} ${getImageWordForCount(images.length)} geladen.`;
 };
 
 const getStoredDrawboardImages = () => {
@@ -87,7 +92,7 @@ const getStoredDrawboardImages = () => {
     const parsed = JSON.parse(storedImages);
     if (!Array.isArray(parsed)) return [];
     return parsed
-      .filter((image) => image && typeof image.name === 'string' && typeof image.url === 'string' && isSafeDataImage(image.url))
+      .filter(isValidDrawboardImage)
       .map((image) => ({
         name: image.name,
         url: image.url,

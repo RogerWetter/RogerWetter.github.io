@@ -7,6 +7,7 @@ let lineWidth = 5
 let erasing = false
 const galleryStorageKey = 'rw.gallery.customImages'
 const REDIRECT_DELAY_MS = 800
+const GALLERY_PATH = '/Gallery/'
 
 window.addEventListener('load', () => {
   setCanvasSize()
@@ -226,6 +227,6 @@ saveToGalleryBtn.onclick = () => {
   localStorage.setItem(galleryStorageKey, JSON.stringify(images))
   showStatus('Gespeichert! Du findest dein Bild jetzt in der Galerie.')
   window.setTimeout(() => {
-    window.location.href = '/Gallery/'
+    window.location.href = GALLERY_PATH
   }, REDIRECT_DELAY_MS)
 }
