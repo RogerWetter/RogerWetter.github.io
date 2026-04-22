@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="style.css?v=1.0">
 </head>
 <script src="../themeScript.js"></script>
+<script src="../i18n.js"></script>
 <body>
 <header>
     <nav class="navbar">
@@ -23,17 +24,17 @@
     </div>
 </header>
 
-<main class="gallery__page">
+<main id="main-content" class="gallery__page">
     <div class="gallery__actions">
-        <a class="gallery__create-button" href="/Projects/drawboard/">Erstelle dein eigenes Bild</a>
-        <button id="gallery-random-btn" class="gallery__random-button" type="button">Überrasch mich ✨</button>
+        <a class="gallery__create-button" href="/Projects/drawboard/" data-i18n="gallery.create">Erstelle dein eigenes Bild</a>
+        <button id="gallery-random-btn" class="gallery__random-button" type="button" data-i18n="gallery.random">Überrasch mich ✨</button>
     </div>
     <p id="gallery-status" class="gallery__status"></p>
     <ul id="gallery-grid" class="gallery__grid"></ul>
 </main>
 
 <footer>
-    <a href="/privacy.txt" target="_blank">Privacy Notice</a>
+    <a href="/privacy.txt" target="_blank" data-i18n="common.privacyNotice">Privacy Notice</a>
 </footer>
 
 <script src="../navbar.js"></script>

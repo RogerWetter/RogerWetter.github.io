@@ -7,6 +7,7 @@
     <title>Oops! 404 Error</title>
     <link rel="icon" href="icons/Initials.png">
     <link type="text/css" rel="stylesheet" media="screen" href="style.css?v=1.0" />
+    <script src="i18n.js"></script>
     <style>
         body {
           width: 100vw;
@@ -28,12 +29,14 @@
     </style>
 </head>
 <body>
-<h1 class="rainbow__text">Oops! 404 Error</h1>
-<p>Looks like you took a wrong turn!</p>
-<p>But hey, don't worry! You can always go <a href="/" class="rainbow__text">back to the homepage</a>.</p>
+<main id="main-content">
+<h1 class="rainbow__text" data-i18n="404.title">Oops! 404 Error</h1>
+<p data-i18n="404.p1">Looks like you took a wrong turn!</p>
+<p><span data-i18n="404.p2">But hey, don't worry! You can always go</span> <a href="/" class="rainbow__text" data-i18n="404.back">back to the homepage</a>.</p>
+</main>
 
 <footer>
-  <a href="/privacy.txt" target="_blank" >Privacy Notice</a>
+  <a href="/privacy.txt" target="_blank" data-i18n="common.privacyNotice">Privacy Notice</a>
 </footer>
 
 </body>

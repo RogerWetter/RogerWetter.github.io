@@ -8,6 +8,7 @@ let erasing = false
 const galleryStorageKey = 'rw.gallery.customImages'
 const REDIRECT_DELAY_MS = 800
 const GALLERY_PATH = '/Gallery/'
+const t = (key, values = {}) => window.RW_I18N?.t(key, values) ?? key
 
 window.addEventListener('load', () => {
   setCanvasSize()
@@ -134,7 +135,7 @@ document.getElementById('lineWidthPicker').addEventListener('change', () =>{
 })
 
 document.getElementById('clearBtn').onclick = () => {
-  if (confirm('Sure you want to clear the whole site?'))
+  if (confirm(t('drawboard.confirmClear')))
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 }
 
@@ -195,24 +196,21 @@ const getStoredGalleryImages = () => {
 
 saveToGalleryBtn.onclick = () => {
   if (!hasVisibleDrawing()) {
-    showStatus('Zeichne erst etwas, bevor du es in die Galerie speicherst.')
+    showStatus(t('drawboard.empty'))
     return
   }
 
   const suggestedName = getLocalSuggestedName()
-  const enteredName = prompt('Name für dein Bild:', suggestedName)
+  const enteredName = prompt(t('drawboard.promptName'), suggestedName)
   if (enteredName === null) return
 
   const safeName = normalizeName(enteredName)
   if (!safeName) {
-    showStatus('Bitte gib einen gültigen Bildnamen ein.')
+    showStatus(t('drawboard.invalidName'))
     return
   }
 
-  const warningAccepted = confirm(
-    'Achtung: Galerie-Inhalte sind öffentlich sichtbar und für alle Besucher einsehbar. ' +
-    'Bitte teile keine privaten Daten. Möchtest du das Bild trotzdem speichern?'
-  )
+  const warningAccepted = confirm(t('drawboard.publicWarning'))
   if (!warningAccepted) return
 
   const newImage = {
@@ -225,8 +223,38 @@ saveToGalleryBtn.onclick = () => {
 
   const images = [newImage, ...getStoredGalleryImages()].slice(0, 40)
   localStorage.setItem(galleryStorageKey, JSON.stringify(images))
-  showStatus('Gespeichert! Du findest dein Bild jetzt in der Galerie.')
+  showStatus(t('drawboard.saved'))
   window.setTimeout(() => {
     window.location.href = GALLERY_PATH
   }, REDIRECT_DELAY_MS)
 }
+
+const updateDrawboardTexts = () => {
+  const clearBtn = document.getElementById('clearBtn')
+  const eraser = document.getElementById('eraserBtn')
+  const colorPicker = document.getElementById('colorPicker')
+  const lineWidthPicker = document.getElementById('lineWidthPicker')
+
+  if (clearBtn) {
+    clearBtn.textContent = 'C'
+    clearBtn.setAttribute('aria-label', t('drawboard.clear'))
+    clearBtn.setAttribute('title', t('drawboard.clear'))
+  }
+  if (eraser) {
+    eraser.setAttribute('aria-label', t('drawboard.eraser'))
+    eraser.setAttribute('title', t('drawboard.eraser'))
+  }
+  if (colorPicker) {
+    colorPicker.setAttribute('aria-label', t('drawboard.color'))
+    colorPicker.setAttribute('title', t('drawboard.color'))
+  }
+  if (lineWidthPicker) {
+    lineWidthPicker.setAttribute('aria-label', t('drawboard.width'))
+    lineWidthPicker.setAttribute('title', t('drawboard.width'))
+  }
+  if (saveToGalleryBtn) saveToGalleryBtn.textContent = t('drawboard.save')
+  if (canvas) canvas.setAttribute('aria-label', t('drawboard.canvas'))
+}
+
+document.addEventListener('rw:language-changed', updateDrawboardTexts)
+updateDrawboardTexts()

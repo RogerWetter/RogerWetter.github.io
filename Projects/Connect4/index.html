@@ -10,6 +10,7 @@
     <script src="script.js"></script>
 </head>
 <script src="../../themeScript.js"></script>
+<script src="../../i18n.js"></script>
 <body>
 
 <nav class="navbar">
@@ -23,19 +24,22 @@
     <div id="theme-icon"></div>
 </div>
 
+<main id="main-content">
 <div class="connect4__header">
     <h1>Connect 4!</h1>
     <div class="connect4__header__buttons">
-        <button id="new_game_btn" class="button">new Game</button>
-        <button id="undo_btn" class="button">undo</button>
+        <button id="new_game_btn" type="button" class="button" data-i18n="connect4.newGame">New game</button>
+        <button id="undo_btn" type="button" class="button" data-i18n="connect4.undo">Undo</button>
     </div>
-    <output id="output">It's 🔵Blue's turn!</output>
+    <output id="output" aria-live="polite" data-i18n="connect4.turnBlue">It's 🔵 Blue's turn!</output>
 </div>
 
 <div class="board"></div>
+</main>
 
 <script src="../../navbar.js"></script>
 <script>
+  updateConnect4Texts()
   showBoard()
 </script>
 </body>
@@ -58,7 +62,7 @@
 </script>
 
 <footer>
-  <a href="/privacy.txt" target="_blank" >Privacy Notice</a>
+  <a href="/privacy.txt" target="_blank" data-i18n="common.privacyNotice">Privacy Notice</a>
 </footer>
 
 </html>
