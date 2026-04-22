@@ -1,5 +1,8 @@
 const galleryGrid = document.getElementById('gallery-grid');
 const galleryStatus = document.getElementById('gallery-status');
+const galleryPage = document.getElementById('gallery-page');
+const githubOwner = galleryPage?.dataset.githubOwner || 'RogerWetter';
+const githubRepo = galleryPage?.dataset.githubRepo || 'RogerWetter.github.io';
 
 const supportedImageExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif', '.avif', '.heic', '.heif'];
 
@@ -39,7 +42,7 @@ const renderImages = (images) => {
 
 const loadGallery = async () => {
   try {
-    const response = await fetch('https://api.github.com/repos/RogerWetter/RogerWetter.github.io/contents/Gallery/images');
+    const response = await fetch(`https://api.github.com/repos/${githubOwner}/${githubRepo}/contents/Gallery/images`);
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}`);
     }
@@ -55,7 +58,7 @@ const loadGallery = async () => {
 
     renderImages(images);
   } catch (error) {
-    galleryStatus.textContent = 'Bilder konnten gerade nicht geladen werden.';
+    galleryStatus.textContent = `Bilder konnten gerade nicht geladen werden (${error.message}).`;
   }
 };
 
