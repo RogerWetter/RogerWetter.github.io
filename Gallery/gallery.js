@@ -15,6 +15,8 @@ const isSafeDataImage = (url) => /^data:image\/(png|jpeg|jpg|webp|gif|avif);base
 
 let renderedItems = [];
 let loadedImagesCache = [];
+let galleryLoaded = false;
+let lastGalleryErrorStatus = null;
 
 const t = (key, values = {}) => i18n()?.t(key, values) ?? key;
 const getImageWordForCount = (count) => count === 1 ? t('gallery.image.one') : t('gallery.image.many');
@@ -28,6 +30,8 @@ const isValidDrawboardImage = (image) =>
 const renderImages = (images) => {
   galleryGrid.innerHTML = '';
   renderedItems = [];
+  galleryLoaded = true;
+  lastGalleryErrorStatus = null;
 
   loadedImagesCache = images;
 
@@ -116,7 +120,9 @@ const loadGallery = async () => {
   try {
     const response = await fetch(`https://api.github.com/repos/${githubOwner}/${githubRepo}/contents/Gallery/images`);
     if (!response.ok) {
-      throw new Error(`Fehler beim Laden der Bilder (HTTP ${response.status})`);
+      const httpError = new Error('Gallery HTTP error');
+      httpError.status = response.status;
+      throw httpError;
     }
 
     const files = await response.json();
@@ -134,11 +140,15 @@ const loadGallery = async () => {
 
     renderImages(images);
   } catch (error) {
-    if (error.message?.includes('HTTP')) {
-      const status = error.message.match(/(\d+)/)?.[1] || '';
+    if (error.status) {
+      const status = String(error.status);
+      galleryLoaded = false;
+      lastGalleryErrorStatus = status;
       galleryStatus.textContent = t('gallery.error', { status });
       return;
     }
+    galleryLoaded = false;
+    lastGalleryErrorStatus = null;
     galleryStatus.textContent = error.message;
   }
 };
@@ -155,7 +165,11 @@ const translateGalleryControls = () => {
   const createButton = document.querySelector('.gallery__create-button');
   if (createButton) createButton.textContent = t('gallery.create');
   if (galleryRandomBtn) galleryRandomBtn.textContent = t('gallery.random');
-  if (loadedImagesCache.length || galleryStatus.textContent) renderImages(loadedImagesCache);
+  if (galleryLoaded) {
+    renderImages(loadedImagesCache);
+  } else if (lastGalleryErrorStatus) {
+    galleryStatus.textContent = t('gallery.error', { status: lastGalleryErrorStatus });
+  }
 };
 
 document.addEventListener('rw:language-changed', translateGalleryControls);

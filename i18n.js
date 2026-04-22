@@ -38,7 +38,9 @@
       'fitness.p3': 'During development, special attention was given to user experience (UX), simple design (UI), and user-centered design (UCD).',
       'fitness.insights': 'Insights into the app',
       'stuff.title': 'Stuff',
-      'stuff.text': 'Here is my current Stuff Page from Figma shown live, where I regularly create small icons, logos, and much more. With a bit of luck you can catch me live while I follow my passion.',
+      'stuff.prefix': 'Here is',
+      'stuff.live': 'live',
+      'stuff.text': 'my current Stuff Page from Figma, where I regularly create small icons, logos, and much more. With a bit of luck you can catch me live while I follow my passion.',
       'website.title': 'About this Website',
       'website.p1': 'Welcome to roger-wetter.com! This website is a personal project that I developed completely from scratch. My goal was to improve my skills in HTML, CSS, and JavaScript while creating a platform to present my work and interests.',
       'website.h2.dev': 'Built from scratch:',
@@ -106,10 +108,12 @@
       'fitness.title': 'Willkommen zur Fitness-App!',
       'fitness.p1': 'Die Fitness-App ist das Ergebnis meiner Bachelorarbeit an der ZHAW. Sie wurde entwickelt, um Ihnen dabei zu helfen, Ihre Fitnessziele zu erreichen, egal ob es um Muskelaufbau, Gewichtsabnahme oder allgemeine Fitness geht.',
       'fitness.p2': 'Mit unserer App können Sie individuelle Trainingspläne erstellen, Ihre Fortschritte verfolgen und vieles mehr.',
-      'fitness.p3': 'Bei der Entwicklung wurde besonders auf Benutzererfahrung (UX), simples Design (UI) und Nutzerzentrierung (UCD) geachtet.',
+      'fitness.p3': 'Bei der Entwicklung wurde besonders auf Benutzererfahrung (UX), simples Design (UI) und die Nutzerzentrierung (UCD) geachtet.',
       'fitness.insights': 'Einblicke in die App',
       'stuff.title': 'Stuff',
-      'stuff.text': 'Hier ist live meine aktuelle Stuff-Page von Figma, in der ich regelmässig kleine Icons, Logos und vieles mehr erstelle. Mit etwas Glück erwischt man mich live bei meiner Leidenschaft.',
+      'stuff.prefix': 'Hier ist',
+      'stuff.live': 'live',
+      'stuff.text': 'meine aktuelle Stuff-Page von Figma, in der ich regelmässig kleine Icons, Logos und vieles mehr erstelle. Mit etwas Glück erwischt man mich live bei meiner Leidenschaft.',
       'website.title': 'Über diese Website',
       'website.p1': 'Herzlich willkommen auf roger-wetter.com! Diese Website ist ein persönliches Projekt, das ich von Grund auf selbst entwickelt habe. Mein Ziel war es, meine Fähigkeiten in HTML, CSS und JavaScript zu verbessern und gleichzeitig eine Plattform zu schaffen, um meine Arbeit und Interessen zu präsentieren.',
       'website.h2.dev': 'Eigenentwicklung:',
@@ -180,7 +184,9 @@
       'fitness.p3': 'Pendant le développement, une attention particulière a été portée à l’expérience utilisateur (UX), à un design simple (UI) et à la conception centrée utilisateur (UCD).',
       'fitness.insights': 'Aperçus de l’application',
       'stuff.title': 'Stuff',
-      'stuff.text': 'Voici en direct ma page Stuff actuelle sur Figma, où je crée régulièrement de petites icônes, des logos et bien plus encore. Avec un peu de chance, vous me verrez en direct pendant que je poursuis ma passion.',
+      'stuff.prefix': 'Voici',
+      'stuff.live': 'en direct',
+      'stuff.text': 'ma page Stuff actuelle sur Figma, où je crée régulièrement de petites icônes, des logos et bien plus encore. Avec un peu de chance, vous me verrez en direct pendant que je poursuis ma passion.',
       'website.title': 'À propos de ce site web',
       'website.p1': 'Bienvenue sur roger-wetter.com! Ce site web est un projet personnel que j’ai développé entièrement de zéro. Mon objectif était d’améliorer mes compétences en HTML, CSS et JavaScript tout en créant une plateforme pour présenter mon travail et mes centres d’intérêt.',
       'website.h2.dev': 'Développement personnel:',
@@ -251,7 +257,9 @@
       'fitness.p3': 'Durante lo sviluppo è stata data particolare attenzione all’esperienza utente (UX), a un design semplice (UI) e alla progettazione centrata sull’utente (UCD).',
       'fitness.insights': 'Panoramica dell’app',
       'stuff.title': 'Stuff',
-      'stuff.text': 'Qui trovi in diretta la mia attuale pagina Stuff su Figma, dove creo regolarmente piccole icone, loghi e molto altro. Con un po’ di fortuna puoi trovarmi online mentre seguo la mia passione.',
+      'stuff.prefix': 'Qui trovi',
+      'stuff.live': 'in diretta',
+      'stuff.text': 'la mia attuale pagina Stuff su Figma, dove creo regolarmente piccole icone, loghi e molto altro. Con un po’ di fortuna puoi trovarmi online mentre seguo la mia passione.',
       'website.title': 'Informazioni su questo sito',
       'website.p1': 'Benvenuto su roger-wetter.com! Questo sito è un progetto personale che ho sviluppato interamente da zero. Il mio obiettivo era migliorare le mie competenze in HTML, CSS e JavaScript, creando al contempo una piattaforma per presentare il mio lavoro e i miei interessi.',
       'website.h2.dev': 'Sviluppo autonomo:',
@@ -322,7 +330,9 @@
       'fitness.p3': 'При разработке особое внимание уделялось пользовательскому опыту (UX), простому дизайну (UI) и пользовательско-ориентированному подходу (UCD).',
       'fitness.insights': 'Обзор приложения',
       'stuff.title': 'Stuff',
-      'stuff.text': 'Здесь вживую показана моя текущая страница Stuff в Figma, где я регулярно создаю небольшие иконки, логотипы и многое другое. Если повезёт, вы увидите меня онлайн за любимым делом.',
+      'stuff.prefix': 'Здесь',
+      'stuff.live': 'вживую',
+      'stuff.text': 'показана моя текущая страница Stuff в Figma, где я регулярно создаю небольшие иконки, логотипы и многое другое. Если повезёт, вы увидите меня онлайн за любимым делом.',
       'website.title': 'Об этом сайте',
       'website.p1': 'Добро пожаловать на roger-wetter.com! Этот сайт — личный проект, который я полностью разработал с нуля. Моя цель — улучшить навыки в HTML, CSS и JavaScript и одновременно создать платформу для представления своих работ и интересов.',
       'website.h2.dev': 'Собственная разработка:',
@@ -362,7 +372,7 @@
 
   const normalizeLanguage = (value) => {
     if (!value || typeof value !== 'string') return null;
-    const short = value.toLowerCase().split('-')[0];
+    const short = value.toLowerCase().split(/[-_]/)[0];
     return SUPPORTED_LANGUAGES.includes(short) ? short : null;
   };
 
@@ -382,7 +392,7 @@
   let currentLanguage = getPreferredLanguage();
 
   const interpolate = (template, values = {}) =>
-    template.replace(/\{(\w+)\}/g, (_, key) => (values[key] ?? ''));
+    template.replace(/\{(\w+)\}/g, (match, key) => (values[key] ?? match));
 
   const t = (key, values = {}) => {
     const entry = translations[currentLanguage]?.[key] ?? translations.en[key] ?? key;
