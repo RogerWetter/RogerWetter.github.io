@@ -1,8 +1,13 @@
 
 const canvas = document.querySelector('#canvas')
 const ctx = canvas.getContext('2d')
+const saveToGalleryBtn = document.getElementById('saveToGalleryBtn')
+const drawboardStatus = document.getElementById('drawboard-status')
 let lineWidth = 5
 let erasing = false
+const galleryStorageKey = 'rw.gallery.customImages'
+const REDIRECT_DELAY_MS = 800
+const GALLERY_PATH = '/Gallery/'
 
 window.addEventListener('load', () => {
   setCanvasSize()
@@ -140,4 +145,88 @@ eraserBtn.onclick = () => {
   eraserBtn.className = erasing? 'pressed button' : 'button'
   canvas.className = erasing? 'canvas-erasing' : 'canvas-drawing'
   ctx.globalCompositeOperation = erasing? "destination-out" : "source-over"
+}
+
+const showStatus = (message) => {
+  drawboardStatus.textContent = message
+  drawboardStatus.style.display = 'block'
+  window.setTimeout(() => {
+    drawboardStatus.style.display = 'none'
+  }, 5000)
+}
+
+const normalizeName = (name) => name
+  .trim()
+  .replace(/\s+/g, '-')
+  .replace(/[^a-zA-Z0-9äöüÄÖÜß_-]/g, '')
+  .slice(0, 60)
+
+const formatDatePart = (value) => value.toString().padStart(2, '0')
+
+const getLocalSuggestedName = () => {
+  const now = new Date()
+  const yyyy = now.getFullYear()
+  const mm = formatDatePart(now.getMonth() + 1)
+  const dd = formatDatePart(now.getDate())
+  const hh = formatDatePart(now.getHours())
+  const min = formatDatePart(now.getMinutes())
+  const ss = formatDatePart(now.getSeconds())
+  return `bild-${yyyy}-${mm}-${dd}-${hh}-${min}-${ss}`
+}
+
+const hasVisibleDrawing = () => {
+  const { data } = ctx.getImageData(0, 0, canvas.width, canvas.height)
+  for (let i = 3; i < data.length; i += 4) {
+    if (data[i] !== 0) return true
+  }
+  return false
+}
+
+const getStoredGalleryImages = () => {
+  const storedImages = localStorage.getItem(galleryStorageKey)
+  if (!storedImages) return []
+  try {
+    const parsed = JSON.parse(storedImages)
+    return Array.isArray(parsed) ? parsed : []
+  } catch (error) {
+    return []
+  }
+}
+
+saveToGalleryBtn.onclick = () => {
+  if (!hasVisibleDrawing()) {
+    showStatus('Zeichne erst etwas, bevor du es in die Galerie speicherst.')
+    return
+  }
+
+  const suggestedName = getLocalSuggestedName()
+  const enteredName = prompt('Name für dein Bild:', suggestedName)
+  if (enteredName === null) return
+
+  const safeName = normalizeName(enteredName)
+  if (!safeName) {
+    showStatus('Bitte gib einen gültigen Bildnamen ein.')
+    return
+  }
+
+  const warningAccepted = confirm(
+    'Achtung: Galerie-Inhalte sind öffentlich sichtbar und für alle Besucher einsehbar. ' +
+    'Bitte teile keine privaten Daten. Möchtest du das Bild trotzdem speichern?'
+  )
+  if (!warningAccepted) return
+
+  const newImage = {
+    id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+    name: safeName,
+    source: 'drawboard',
+    createdAt: new Date().toISOString(),
+    url: canvas.toDataURL('image/png')
+  }
+
+  const images = [newImage, ...getStoredGalleryImages()].slice(0, 40)
+  localStorage.setItem(galleryStorageKey, JSON.stringify(images))
+  showStatus('Gespeichert! Du findest dein Bild jetzt in der Galerie.')
+  window.setTimeout(() => {
+    window.location.href = GALLERY_PATH
+  }, REDIRECT_DELAY_MS)
 }
