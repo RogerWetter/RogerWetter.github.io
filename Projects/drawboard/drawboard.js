@@ -184,7 +184,7 @@ saveToGalleryBtn.onclick = () => {
     return
   }
 
-  const suggestedName = `bild-${new Date().toISOString().slice(0, 16).replace(/[:T]/g, '-')}`
+  const suggestedName = `bild-${new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-')}`
   const enteredName = prompt('Name für dein Bild:', suggestedName)
   if (enteredName === null) return
 

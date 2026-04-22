@@ -13,6 +13,7 @@ const isSupportedImage = (name) =>
 const isSafeDataImage = (url) => /^data:image\/(png|jpeg|jpg|webp|gif|avif);base64,/i.test(url);
 
 let renderedItems = [];
+const imageWord = (count) => count === 1 ? 'Bild' : 'Bilder';
 
 const renderImages = (images) => {
   galleryGrid.innerHTML = '';
@@ -25,8 +26,8 @@ const renderImages = (images) => {
 
   const ownImages = images.filter((image) => image.source === 'drawboard').length;
   galleryStatus.textContent = ownImages
-    ? `Es wurden ${images.length} Bilder geladen (${ownImages} von dir erstellt).`
-    : `${images.length} Bilder geladen.`;
+    ? `Es wurden ${images.length} ${imageWord(images.length)} geladen (${ownImages} von dir erstellt).`
+    : `${images.length} ${imageWord(images.length)} geladen.`;
 
   images.forEach((image) => {
     const item = document.createElement('li');
