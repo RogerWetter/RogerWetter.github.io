@@ -10,11 +10,11 @@ const isSupportedImage = (name) =>
 
 const renderImages = (images) => {
   if (!images.length) {
-    galleryStatus.textContent = 'Noch keine Bilder gefunden.';
+    galleryStatus.textContent = 'Keine Bilder vorhanden.';
     return;
   }
 
-  galleryStatus.textContent = `${images.length} Bild${images.length === 1 ? '' : 'er'} gefunden.`;
+  galleryStatus.textContent = '';
 
   images.forEach((image) => {
     const item = document.createElement('li');
