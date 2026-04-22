@@ -77,10 +77,29 @@ body {
   width: auto;
   margin: 10px;
 }
+
+.button--wide {
+  padding: 0 0.75rem;
+}
+
 .buttonImage {
   background: none;
   height: 25px;
   width: 25px;
+}
+
+.drawboard-status {
+  position: fixed;
+  right: 1rem;
+  top: 130px;
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  border: 1px solid #1ac9b8;
+  border-radius: 0.6rem;
+  padding: 0.6rem 0.8rem;
+  max-width: min(90vw, 360px);
+  z-index: 20;
+  display: none;
 }
 @media (min-width: 900px) {
   .button:hover {
@@ -138,5 +157,17 @@ li {
   .buttonImage {
     height: 40px;
     width: 40px;
+  }
+
+  .button--wide {
+    max-width: 220px;
+    font-size: 0.85rem;
+  }
+
+  .drawboard-status {
+    top: 90px;
+    left: 0.8rem;
+    right: 0.8rem;
+    max-width: unset;
   }
 }
