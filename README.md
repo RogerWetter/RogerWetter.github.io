@@ -1,6 +1,6 @@
 <a href="https://roger-wetter.com/">roger-wetter.com</a>
 
-## Gallery
+## Gallery (Galerie)
 
 Fotos für die Gallery einfach in folgenden Ordner legen:
 
