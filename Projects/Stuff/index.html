@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="style.css?v=1">
 </head>
 <script src="../../themeScript.js"></script>
+<script src="../../i18n.js"></script>
 <body>
 <header>
     <nav class="navbar">
@@ -23,18 +24,22 @@
     </div>
 </header>
 
-<main>
-    <h1 class="rainbow__text">Stuff</h1>
+<main id="main-content">
+    <h1 class="rainbow__text" data-i18n="stuff.title">Stuff</h1>
 
-    <p>Hier ist <img class="red_circle" src="../../icons/red-circle.gif" alt="red circle"><strong>live</strong> meine aktuelle Stuff Page von Figma, in der ich regelmässig kleine Icons, Logos und vieles mehr erstelle.<br>
-    Mit etwas Glück erwischt man mich live bei meiner Leidenschaft.</p>
+    <p>
+        <span data-i18n="stuff.prefix">Hier ist</span>
+        <img class="red_circle" src="../../icons/red-circle.gif" alt="red circle">
+        <strong data-i18n="stuff.live">live</strong>
+        <span data-i18n="stuff.text">meine aktuelle Stuff Page von Figma, in der ich regelmässig kleine Icons, Logos und vieles mehr erstelle. Mit etwas Glück erwischt man mich live bei meiner Leidenschaft.</span>
+    </p>
 
     <iframe class="figma-frame" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FExvBRrCWxpzHlRir85hMwO%2FStuff%3Ftype%3Ddesign%26node-id%3D0%253A1%26mode%3Ddesign%26t%3Dx9qDFqxe4BmpjRdp-1" allowfullscreen></iframe>
 </main>
 
 
 <footer>
-    <a href="/privacy.txt" target="_blank" >Privacy Notice</a>
+    <a href="/privacy.txt" target="_blank" data-i18n="common.privacyNotice">Privacy Notice</a>
 </footer>
 
 <script src="../../navbar.js"></script>

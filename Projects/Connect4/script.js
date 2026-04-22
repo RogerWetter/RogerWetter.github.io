@@ -5,8 +5,14 @@ let stateSeq = []
 let state = Array(6).fill('').map(el => Array(7).fill(''))
 let gameActive = true
 
-let redturn = "It's 🔴Red's turn!"
-let blueturn = "It's 🔵Blue's turn!"
+let redturn = ""
+let blueturn = ""
+const t = (key, values = {}) => window.RW_I18N?.t(key, values) ?? key
+
+function setLocalizedStrings() {
+    redturn = t("connect4.turnRed")
+    blueturn = t("connect4.turnBlue")
+}
 
 function showBoard() {
     let board = document.querySelector(".board")
@@ -53,17 +59,16 @@ function newGame() {
     let output = document.getElementById("output")
     output.removeAttribute("class")
 
-    if (currentColor === red) {
-        output.innerText = "Let us play again! " + blueturn
-    } else {
-        output.innerText = "Let us play again! " + redturn
-    }
+    output.innerText = currentColor === red
+        ? t("connect4.playAgain", { turn: blueturn })
+        : t("connect4.playAgain", { turn: redturn })
 }
 
 function winner(a) {
     let output = document.getElementById("output");
     gameActive = false
-    output.innerText = "The Player with the " + currentColor + " coins has won!!!"
+    const colorLabel = currentColor === red ? t("connect4.colorRed") : t("connect4.colorBlue")
+    output.innerText = t("connect4.winner", { color: colorLabel })
     if (currentColor === red) {
         output.setAttribute("class", "glow-red-text")
         document.getElementById(a[0][0] + "-" + a[0][1]).childNodes.forEach(value => value.setAttribute("class", "field red piece glow-red"))
@@ -80,7 +85,7 @@ function winner(a) {
 }
 
 function noWinner() {
-    document.getElementById("output").innerText = "so... remis...? just click the field to play again!"
+    document.getElementById("output").innerText = t("connect4.draw")
     gameActive = false
 }
 
@@ -211,3 +216,19 @@ function elt(type, attrs, ...children) {
     }
     return node
 }
+
+function updateConnect4Texts() {
+    setLocalizedStrings()
+    const newGameButton = document.getElementById("new_game_btn")
+    const undoButton = document.getElementById("undo_btn")
+    if (newGameButton) newGameButton.textContent = t("connect4.newGame")
+    if (undoButton) undoButton.textContent = t("connect4.undo")
+
+    const output = document.getElementById("output")
+    if (output && gameActive && stateSeq.length === 0 && !state.flat().some(Boolean)) {
+        output.innerText = blueturn
+    }
+}
+
+document.addEventListener("rw:language-changed", updateConnect4Texts)
+setLocalizedStrings()

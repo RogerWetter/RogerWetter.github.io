@@ -15,6 +15,7 @@
     <link type="text/css" rel="stylesheet" media="screen" href="style.css?v=1.0" />
 </head>
 <script src="themeScript.js"></script>
+<script src="i18n.js"></script>
 <body>
 <header>
     <nav class="navbar">
@@ -28,15 +29,14 @@
     </div>
 </header>
 
-<h1 class="rainbow__text">Explore Roger Wetter!</h1>
-
-
+<main id="main-content">
+<h1 class="rainbow__text" data-i18n="home.explore">Explore Roger Wetter!</h1>
 <ul class="picture__grid">
     <li class="picture__container">
         <a href="Projects">
             <img src="Pictures/code.webp" alt="Projects" class="picture">
             <div class="overlay">
-                <div class="overlay__text">PROJECTS</div>
+                <div class="overlay__text" data-i18n="home.projects">PROJECTS</div>
             </div>
         </a>
     </li>
@@ -44,7 +44,7 @@
         <a href="Gallery">
             <img src="Pictures/canvas.png" alt="Gallery" class="picture">
             <div class="overlay">
-                <div class="overlay__text">GALLERY</div>
+                <div class="overlay__text" data-i18n="home.gallery">GALLERY</div>
             </div>
         </a>
     </li>
@@ -65,9 +65,10 @@
         </a>
     </li> -->
 </ul>
+</main>
 
 <footer>
-    <a href="privacy.txt" target="_blank" >Privacy Notice</a>
+    <a href="privacy.txt" target="_blank" data-i18n="common.privacyNotice">Privacy Notice</a>
 </footer>
 
 </body>

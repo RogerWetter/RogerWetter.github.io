@@ -11,6 +11,7 @@
     <script src="slider.js"></script>
 </head>
 <script src="../themeScript.js"></script>
+<script src="../i18n.js"></script>
 <body>
 
 <nav class="navbar">
@@ -28,10 +29,11 @@
 <script src="../navbar.js"></script>
 
 
+<main id="main-content">
 <ul class="about__grid">
     <li class="about__container">
         <div class="about">
-            <h2 class="about__title">Education</h2>
+            <h2 class="about__title" data-i18n="about.education">Education</h2>
         </div>
         <div class="overlay__about">
             <ul class="list__grid">
@@ -55,7 +57,7 @@
     </li>
     <li class="about__container">
         <div class="about">
-            <h2 class="about__title">Experience</h2>
+            <h2 class="about__title" data-i18n="about.experience">Experience</h2>
         </div>
         <div class="overlay__about">
             <ul class="list__grid">
@@ -179,9 +181,10 @@
         </div> -->
     </li>
 </ul>
+</main>
 
 <footer>
-    <a href="/privacy.txt" target="_blank" >Privacy Notice</a>
+    <a href="/privacy.txt" target="_blank" data-i18n="common.privacyNotice">Privacy Notice</a>
 </footer>
 
 <script>

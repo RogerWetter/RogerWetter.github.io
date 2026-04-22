@@ -9,9 +9,10 @@
     <link rel="stylesheet" href="style.css?v=1.003">
 </head>
 <script src="../../themeScript.js"></script>
+<script src="../../i18n.js"></script>
 <body>
-<div class="canvas-container">
-    <canvas id="canvas" class="canvas-drawing"></canvas>
+<main id="main-content" class="canvas-container">
+    <canvas id="canvas" class="canvas-drawing" role="img" data-i18n-aria-label="drawboard.canvas"></canvas>
     <nav class="navbar">
         <div class="navbar__container">
             <a href="/" class="navbar__logo">RW</a>
@@ -24,24 +25,27 @@
     </div>
     <ul class="buttons">
         <li>
-            <button class="button" id="clearBtn">C</button>
+            <button class="button" id="clearBtn" type="button" data-i18n-aria-label="drawboard.clear">C</button>
         </li>
         <li>
-            <button class="button" id="eraserBtn"><img class="buttonImage" src="../../icons/eraser.png" alt=""></button>
+            <button class="button" id="eraserBtn" type="button" data-i18n-aria-label="drawboard.eraser"><img class="buttonImage" src="../../icons/eraser.png" alt=""></button>
         </li>
         <li>
-            <input type="color" class="button" id="colorPicker" value="#ffffff">
+            <input type="color" class="button" id="colorPicker" value="#ffffff" data-i18n-aria-label="drawboard.color">
         </li>
         <li>
             <input type="range" class="button" id="lineWidthPicker" value=5
-                   min=1 max="20">
+                   min=1 max="20" data-i18n-aria-label="drawboard.width">
         </li>
         <li>
-            <button class="button button--wide" id="saveToGalleryBtn">In Galerie speichern</button>
+            <button class="button button--wide" id="saveToGalleryBtn" type="button" data-i18n="drawboard.save">In Galerie speichern</button>
         </li>
     </ul>
     <p id="drawboard-status" class="drawboard-status" aria-live="polite"></p>
-</div>
+</main>
+<footer>
+    <a href="/privacy.txt" target="_blank" data-i18n="common.privacyNotice">Privacy Notice</a>
+</footer>
 <script src="../../navbar.js"></script>
 <script src="drawboard.js?v=1.003"></script>
 </body>

@@ -39,11 +39,30 @@ document.addEventListener("DOMContentLoaded", function() {
   updateThemeOnHtmlEl({ theme: currentThemeSetting });
 
   if (button) {
-    button.addEventListener("click", () => {
+    const updateToggleLabel = () => {
+      const label = window.RW_I18N?.t("common.themeToggle") || "Toggle dark mode";
+      button.setAttribute("aria-label", label);
+      button.setAttribute("title", label);
+    };
+
+    button.setAttribute("role", "button");
+    button.setAttribute("tabindex", "0");
+    updateToggleLabel();
+    document.addEventListener("rw:language-changed", updateToggleLabel);
+
+    const toggleTheme = () => {
       const newTheme = currentThemeSetting === "dark" ? "light" : "dark";
       localStorage.setItem("theme", newTheme);
       updateThemeOnHtmlEl({ theme: newTheme });
       currentThemeSetting = newTheme;
+    };
+
+    button.addEventListener("click", toggleTheme);
+    button.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        toggleTheme();
+      }
     });
   }
 });

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="style.css?v=1">
 </head>
 <script src="../../themeScript.js"></script>
+<script src="../../i18n.js"></script>
 <body>
 <header>
     <nav class="navbar">
@@ -23,14 +24,16 @@
     </div>
 </header>
 
-<main>
-    <h1 class="rainbow__text">Willkommen zur Fitness-App!</h1>
-    <p>
+<main id="main-content">
+    <h1 class="rainbow__text" data-i18n="fitness.title">Willkommen zur Fitness-App!</h1>
+    <p data-i18n="fitness.p1">
         Die Fitness-App ist das Ergebnis meiner Bachelorarbeit an der ZHAW. Sie wurde entwickelt, um Ihnen dabei zu helfen, Ihre Fitnessziele zu erreichen, egal ob es um Muskelaufbau, Gewichtsabnahme oder allgemeine Fitness geht.
     </p>
-    <p>
-        Mit unserer App können Sie individuelle Trainingspläne erstellen, Ihre Fortschritte verfolgen und vieles mehr.<br>
-        Bei der Entwicklung wird besonders auf die Benutzererfahrung (UX), das simple Design (UI) und der Nutzerzentriertheit (UCD) geachtet.
+    <p data-i18n="fitness.p2">
+        Mit unserer App können Sie individuelle Trainingspläne erstellen, Ihre Fortschritte verfolgen und vieles mehr.
+    </p>
+    <p data-i18n="fitness.p3">
+        Bei der Entwicklung wurde besonders auf die Benutzererfahrung (UX), das simple Design (UI) und die Nutzerzentriertheit (UCD) geachtet.
     </p>
 
     <div class="horizontal">
@@ -44,7 +47,7 @@
         </a>
     </div>
 
-    <h2>Einblicke in die App</h2>
+    <h2 data-i18n="fitness.insights">Einblicke in die App</h2>
     <div class="app_pictures_container">
         <img src="../../Pictures/Fitnessapp_Home.webp" alt="Fitness-App Home" class="app_picture">
         <img src="../../Pictures/Fitnessapp_AktiveUebung.webp" alt="Fitness-App Aktive Übung" class="app_picture">
@@ -53,7 +56,7 @@
 
 
 <footer>
-    <a href="/privacy.txt" target="_blank" >Privacy Notice</a>
+    <a href="/privacy.txt" target="_blank" data-i18n="common.privacyNotice">Privacy Notice</a>
 </footer>
 
 <script src="../../navbar.js"></script>
