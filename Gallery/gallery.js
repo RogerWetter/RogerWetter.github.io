@@ -14,6 +14,7 @@ const isSafeDataImage = (url) => /^data:image\/(png|jpeg|jpg|webp|gif|avif);base
 
 let renderedItems = [];
 const imageWord = (count) => count === 1 ? 'Bild' : 'Bilder';
+const getRandomItem = (items) => items[Math.floor(Math.random() * items.length)];
 
 const renderImages = (images) => {
   galleryGrid.innerHTML = '';
@@ -24,16 +25,14 @@ const renderImages = (images) => {
     return;
   }
 
-  const ownImages = images.filter((image) => image.source === 'drawboard').length;
-  galleryStatus.textContent = ownImages
-    ? `Es wurden ${images.length} ${imageWord(images.length)} geladen (${ownImages} von dir erstellt).`
-    : `${images.length} ${imageWord(images.length)} geladen.`;
+  let ownImages = 0;
 
   images.forEach((image) => {
     const item = document.createElement('li');
     item.classList.add('gallery__item');
     if (image.source === 'drawboard') {
       item.classList.add('gallery__item--local');
+      ownImages += 1;
     }
 
     const link = document.createElement('a');
@@ -74,6 +73,10 @@ const renderImages = (images) => {
     galleryGrid.appendChild(item);
     renderedItems.push(item);
   });
+
+  galleryStatus.textContent = ownImages
+    ? `Es wurden ${images.length} ${imageWord(images.length)} geladen (${ownImages} von dir erstellt).`
+    : `${images.length} ${imageWord(images.length)} geladen.`;
 };
 
 const getStoredDrawboardImages = () => {
@@ -126,7 +129,7 @@ const loadGallery = async () => {
 galleryRandomBtn.addEventListener('click', () => {
   if (!renderedItems.length) return;
   renderedItems.forEach((item) => item.classList.remove('gallery__item--spotlight'));
-  const randomItem = renderedItems[Math.floor(Math.random() * renderedItems.length)];
+  const randomItem = getRandomItem(renderedItems);
   randomItem.classList.add('gallery__item--spotlight');
   randomItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
 });

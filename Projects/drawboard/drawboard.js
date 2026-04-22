@@ -6,6 +6,7 @@ const drawboardStatus = document.getElementById('drawboard-status')
 let lineWidth = 5
 let erasing = false
 const galleryStorageKey = 'rw.gallery.customImages'
+const REDIRECT_DELAY_MS = 800
 
 window.addEventListener('load', () => {
   setCanvasSize()
@@ -159,6 +160,19 @@ const normalizeName = (name) => name
   .replace(/[^a-zA-Z0-9äöüÄÖÜß_-]/g, '')
   .slice(0, 60)
 
+const formatDatePart = (value) => value.toString().padStart(2, '0')
+
+const getLocalSuggestedName = () => {
+  const now = new Date()
+  const yyyy = now.getFullYear()
+  const mm = formatDatePart(now.getMonth() + 1)
+  const dd = formatDatePart(now.getDate())
+  const hh = formatDatePart(now.getHours())
+  const min = formatDatePart(now.getMinutes())
+  const ss = formatDatePart(now.getSeconds())
+  return `bild-${yyyy}-${mm}-${dd}-${hh}-${min}-${ss}`
+}
+
 const hasVisibleDrawing = () => {
   const { data } = ctx.getImageData(0, 0, canvas.width, canvas.height)
   for (let i = 3; i < data.length; i += 4) {
@@ -184,7 +198,7 @@ saveToGalleryBtn.onclick = () => {
     return
   }
 
-  const suggestedName = `bild-${new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-')}`
+  const suggestedName = getLocalSuggestedName()
   const enteredName = prompt('Name für dein Bild:', suggestedName)
   if (enteredName === null) return
 
@@ -213,5 +227,5 @@ saveToGalleryBtn.onclick = () => {
   showStatus('Gespeichert! Du findest dein Bild jetzt in der Galerie.')
   window.setTimeout(() => {
     window.location.href = '/Gallery/'
-  }, 800)
+  }, REDIRECT_DELAY_MS)
 }
