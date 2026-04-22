@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>RW - Gallery</title>
+    <link rel="icon" href="../icons/Initials.png">
+    <link rel="stylesheet" href="../style.css?v=1.2">
+    <link rel="stylesheet" href="style.css?v=1.0">
+</head>
+<script src="../themeScript.js"></script>
+<body>
+<header>
+    <nav class="navbar">
+        <div class="navbar__container">
+            <a href="/" class="navbar__logo">RW</a>
+            <ul class="navbar__menu"></ul>
+        </div>
+    </nav>
+    <div id="theme-toggle-case">
+        <div id="theme-toggle"></div>
+        <div id="theme-icon"></div>
+    </div>
+</header>
+
+<main class="gallery__page">
+    <h1 class="rainbow__text">Gallery</h1>
+    <p class="gallery__hint">
+        Lege deine Fotos in <code>/Gallery/images/</code> im Repository ab. Sie werden hier automatisch angezeigt.
+    </p>
+    <p id="gallery-status" class="gallery__status">Lade Bilder…</p>
+    <ul id="gallery-grid" class="gallery__grid"></ul>
+</main>
+
+<footer>
+    <a href="/privacy.txt" target="_blank">Privacy Notice</a>
+</footer>
+
+<script src="../navbar.js"></script>
+<script src="gallery.js"></script>
+</body>
+</html>
