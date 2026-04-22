@@ -2,6 +2,7 @@
 
 const navItems = [
   { name: 'Projects', link: '/Projects' },
+  { name: 'Gallery', link: '/Gallery' },
   // { name: 'About', link: '/About' },
   // { name: 'Contact', link: '/Contact' }
 ];
