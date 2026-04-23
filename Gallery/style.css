@@ -106,7 +106,7 @@
 }
 
 .gallery__fade {
-  will-change: clip-path, mask-image;
+  will-change: transform, opacity;
 }
 
 @media only screen and (max-device-width: 500px) {
