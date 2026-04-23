@@ -1,5 +1,6 @@
 .gallery__page {
-  margin: 2rem auto 4rem;
+  /* Top margin keeps controls just below the navbar fade zone (see FADE_ZONE in gallery.js). */
+  margin: 9rem auto 4rem;
   width: min(1200px, 90vw);
 }
 
@@ -105,13 +106,12 @@
 }
 
 .gallery__fade {
-  transform-origin: top center;
-  will-change: transform, opacity;
+  will-change: clip-path, mask-image;
 }
 
 @media only screen and (max-device-width: 500px) {
   .gallery__page {
-    margin-top: 1rem;
+    margin-top: 8rem;
   }
 
   .gallery__image {
