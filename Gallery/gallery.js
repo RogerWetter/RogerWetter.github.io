@@ -196,6 +196,18 @@ loadGallery();
     return list;
   };
 
+  // Compute t for a given page-Y position (in viewport coordinates).
+  // t = 0: position is well below the navbar (no effect).
+  // t = 1: position has reached the navbar bottom or is above it.
+  const tAt = (y, navbarBottom) => {
+    const distance = y - navbarBottom;
+    return 1 - Math.max(0, Math.min(1, distance / FADE_ZONE));
+  };
+
+  // Total horizontal width shrink (percent) applied at t = 1. The final
+  // visible width at t = 1 is (100 - SHRINK_PERCENT)% of the original.
+  const SHRINK_PERCENT = 18;
+
   const applyFade = () => {
     ticking = false;
     const navbarBottom = navbar.getBoundingClientRect().bottom;
@@ -203,20 +215,37 @@ loadGallery();
     targets.forEach((el) => {
       el.classList.add('gallery__fade');
       const rect = el.getBoundingClientRect();
-      const distance = rect.top - navbarBottom;
-      // t = 0: element is well below the navbar (no effect).
-      // t = 1: element top has reached the navbar bottom or is above it.
-      const t = 1 - Math.max(0, Math.min(1, distance / FADE_ZONE));
-      if (t <= 0) {
-        el.style.transform = '';
+      // Compute t at the element's top and bottom edges independently so
+      // the narrowing / fading is a function of screen-Y rather than a
+      // uniform transform of the whole element. This way the top edge of
+      // one element and the bottom edge of another at the same screen
+      // height have the same width and opacity.
+      const tTop = tAt(rect.top, navbarBottom);
+      const tBot = tAt(rect.bottom, navbarBottom);
+      if (tTop <= 0 && tBot <= 0) {
+        el.style.clipPath = '';
+        el.style.webkitClipPath = '';
+        el.style.maskImage = '';
+        el.style.webkitMaskImage = '';
         el.style.opacity = '';
         return;
       }
-      const scale = 1 - 0.18 * t;      // shrink overall to ~82%
-      const scaleY = 1 - 0.7 * t;      // become thinner (down to ~30%)
-      const opacity = Math.max(0, 1 - t);
-      el.style.transform = `scale(${scale.toFixed(4)}) scaleY(${scaleY.toFixed(4)})`;
-      el.style.opacity = opacity.toFixed(4);
+      // Trapezoidal clip: the top edge is inset by (SHRINK_PERCENT/2)*tTop
+      // on each side, the bottom edge by (SHRINK_PERCENT/2)*tBot.
+      const insetTop = ((SHRINK_PERCENT / 2) * tTop).toFixed(4);
+      const insetBot = ((SHRINK_PERCENT / 2) * tBot).toFixed(4);
+      const rightTop = (100 - (SHRINK_PERCENT / 2) * tTop).toFixed(4);
+      const rightBot = (100 - (SHRINK_PERCENT / 2) * tBot).toFixed(4);
+      const clip = `polygon(${insetTop}% 0%, ${rightTop}% 0%, ${rightBot}% 100%, ${insetBot}% 100%)`;
+      el.style.clipPath = clip;
+      el.style.webkitClipPath = clip;
+      // Vertical opacity gradient: top alpha depends on tTop, bottom on tBot.
+      const topAlpha = Math.max(0, 1 - tTop).toFixed(4);
+      const botAlpha = Math.max(0, 1 - tBot).toFixed(4);
+      const mask = `linear-gradient(to bottom, rgba(0,0,0,${topAlpha}) 0%, rgba(0,0,0,${botAlpha}) 100%)`;
+      el.style.maskImage = mask;
+      el.style.webkitMaskImage = mask;
+      el.style.opacity = '';
     });
   };
 
