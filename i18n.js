@@ -412,6 +412,12 @@
     });
   };
 
+  const SMALL_SCREEN_QUERY = '(max-device-width: 500px)';
+  const smallScreenMedia = typeof window.matchMedia === 'function' ? window.matchMedia(SMALL_SCREEN_QUERY) : null;
+  const isSmallScreen = () => !!(smallScreenMedia && smallScreenMedia.matches);
+  const getLanguageOptionLabel = (language) =>
+    isSmallScreen() ? language.toLowerCase() : t(`common.language.${language}`);
+
   const buildFooterLanguageSelector = () => {
     const footer = document.querySelector('footer');
     if (!footer || footer.querySelector('.language-selector')) return;
@@ -439,7 +445,7 @@
     SUPPORTED_LANGUAGES.forEach((language) => {
       const option = document.createElement('option');
       option.value = language;
-      option.textContent = t(`common.language.${language}`);
+      option.textContent = getLanguageOptionLabel(language);
       if (language === currentLanguage) option.selected = true;
       select.appendChild(option);
     });
@@ -459,10 +465,19 @@
     if (!select) return;
     select.setAttribute('aria-label', t('common.language'));
     Array.from(select.options).forEach((option) => {
-      option.textContent = t(`common.language.${option.value}`);
+      option.textContent = getLanguageOptionLabel(option.value);
       option.selected = option.value === currentLanguage;
     });
   };
+
+  if (smallScreenMedia) {
+    const onSmallScreenChange = () => updateLanguageSelector();
+    if (typeof smallScreenMedia.addEventListener === 'function') {
+      smallScreenMedia.addEventListener('change', onSmallScreenChange);
+    } else if (typeof smallScreenMedia.addListener === 'function') {
+      smallScreenMedia.addListener(onSmallScreenChange);
+    }
+  }
 
   const ensureSkipLink = () => {
     if (document.querySelector('.skip-link')) return;

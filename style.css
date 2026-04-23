@@ -7,7 +7,9 @@
   font-family: -apple-system, system-ui, sans-serif;
   /*text-align: center;*/
   /*color: antiquewhite;*/
-  transition: background-color 0.8s;
+  /* Match the duration of the theme toggle's bounce transition so the whole
+     page cross-fades between light and dark instead of snapping. */
+  transition: background-color 0.8s ease, color 0.8s ease, border-color 0.8s ease, fill 0.8s ease, stroke 0.8s ease;
 }
 
 [data-theme="light"] {
@@ -408,6 +410,17 @@ a:hover {
     bottom: auto;
     text-align: left;
     z-index: 1000;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+  }
+
+  .language-selector {
+    margin-left: 0;
+  }
+
+  .language-selector__separator {
+    display: none;
   }
 }
 

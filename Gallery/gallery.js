@@ -177,13 +177,17 @@ translateGalleryControls();
 loadGallery();
 
 // "Recede into the background" effect: as elements approach the sticky navbar
-// while scrolling, shrink and fade them instead of letting them simply
-// disappear under the navbar.
+// while scrolling, shrink and fade them as a whole toward a single common
+// point just below the navbar. Because every target shares the same screen
+// vanishing point, the entire grid visually collapses together instead of
+// each image being clipped independently. Using a CSS transform keeps the
+// border stroke and border-radius intact (they simply scale with the rest).
 (() => {
   const navbar = document.querySelector('.navbar');
   if (!navbar) return;
 
-  const FADE_ZONE = 140; // px transition zone above the navbar bottom
+  const FADE_ZONE = 220; // px transition zone above the navbar bottom
+  const MIN_SCALE = 0.05; // how small elements get right before the navbar
   let ticking = false;
 
   const collectTargets = () => {
@@ -204,48 +208,43 @@ loadGallery();
     return 1 - Math.max(0, Math.min(1, distance / FADE_ZONE));
   };
 
-  // Total horizontal width shrink (percent) applied at t = 1. The final
-  // visible width at t = 1 is (100 - SHRINK_PERCENT)% of the original.
-  const SHRINK_PERCENT = 18;
-
   const applyFade = () => {
     ticking = false;
-    const navbarBottom = navbar.getBoundingClientRect().bottom;
+    const navbarRect = navbar.getBoundingClientRect();
+    const navbarBottom = navbarRect.bottom;
+    const grid = document.getElementById('gallery-grid');
+    const gridRect = grid ? grid.getBoundingClientRect() : null;
+    // The common vanishing point: horizontal centre of the grid, vertically
+    // just under the navbar. All shrinking items converge on this point.
+    const vanishX = gridRect ? gridRect.left + gridRect.width / 2 : window.innerWidth / 2;
+    const vanishY = navbarBottom;
+
     const targets = collectTargets();
     targets.forEach((el) => {
       el.classList.add('gallery__fade');
       const rect = el.getBoundingClientRect();
-      // Compute t at the element's top and bottom edges independently so
-      // the narrowing / fading is a function of screen-Y rather than a
-      // uniform transform of the whole element. This way the top edge of
-      // one element and the bottom edge of another at the same screen
-      // height have the same width and opacity.
-      const tTop = tAt(rect.top, navbarBottom);
-      const tBot = tAt(rect.bottom, navbarBottom);
-      if (tTop <= 0 && tBot <= 0) {
-        el.style.clipPath = '';
-        el.style.webkitClipPath = '';
-        el.style.maskImage = '';
-        el.style.webkitMaskImage = '';
+      // Use the element's vertical centre so an entire row shrinks at the
+      // same rate, making the grid collapse as a whole.
+      const centreY = rect.top + rect.height / 2;
+      const t = tAt(centreY, navbarBottom);
+      if (t <= 0) {
+        el.style.transform = '';
+        el.style.transformOrigin = '';
         el.style.opacity = '';
         return;
       }
-      // Trapezoidal clip: the top edge is inset by (SHRINK_PERCENT/2)*tTop
-      // on each side, the bottom edge by (SHRINK_PERCENT/2)*tBot.
-      const insetTop = ((SHRINK_PERCENT / 2) * tTop).toFixed(4);
-      const insetBot = ((SHRINK_PERCENT / 2) * tBot).toFixed(4);
-      const rightTop = (100 - (SHRINK_PERCENT / 2) * tTop).toFixed(4);
-      const rightBot = (100 - (SHRINK_PERCENT / 2) * tBot).toFixed(4);
-      const clip = `polygon(${insetTop}% 0%, ${rightTop}% 0%, ${rightBot}% 100%, ${insetBot}% 100%)`;
-      el.style.clipPath = clip;
-      el.style.webkitClipPath = clip;
-      // Vertical opacity gradient: top alpha depends on tTop, bottom on tBot.
-      const topAlpha = Math.max(0, 1 - tTop).toFixed(4);
-      const botAlpha = Math.max(0, 1 - tBot).toFixed(4);
-      const mask = `linear-gradient(to bottom, rgba(0,0,0,${topAlpha}) 0%, rgba(0,0,0,${botAlpha}) 100%)`;
-      el.style.maskImage = mask;
-      el.style.webkitMaskImage = mask;
-      el.style.opacity = '';
+      const scale = 1 - t * (1 - MIN_SCALE);
+      // transform-origin is expressed relative to the element's own box, so
+      // convert the shared screen-space vanishing point into local
+      // coordinates. This makes every element shrink toward the same point
+      // on screen regardless of where it sits in the grid.
+      const originX = rect.width > 0 ? ((vanishX - rect.left) / rect.width) * 100 : 50;
+      const originY = rect.height > 0 ? ((vanishY - rect.top) / rect.height) * 100 : 50;
+      el.style.transformOrigin = `${originX.toFixed(3)}% ${originY.toFixed(3)}%`;
+      el.style.transform = `scale(${scale.toFixed(4)})`;
+      // Fade out non-linearly so elements stay legible until they are very
+      // close to the navbar, then quickly disappear.
+      el.style.opacity = Math.max(0, 1 - Math.pow(t, 1.6)).toFixed(4);
     });
   };
 
