@@ -104,6 +104,11 @@
   box-shadow: 0 0 0 3px rgba(26, 201, 184, 0.6);
 }
 
+.gallery__fade {
+  transform-origin: top center;
+  will-change: transform, opacity;
+}
+
 @media only screen and (max-device-width: 500px) {
   .gallery__page {
     margin-top: 1rem;

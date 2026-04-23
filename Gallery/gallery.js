@@ -175,3 +175,63 @@ const translateGalleryControls = () => {
 document.addEventListener('rw:language-changed', translateGalleryControls);
 translateGalleryControls();
 loadGallery();
+
+// "Recede into the background" effect: as elements approach the sticky navbar
+// while scrolling, shrink and fade them instead of letting them simply
+// disappear under the navbar.
+(() => {
+  const navbar = document.querySelector('.navbar');
+  if (!navbar) return;
+
+  const FADE_ZONE = 140; // px transition zone above the navbar bottom
+  let ticking = false;
+
+  const collectTargets = () => {
+    const list = [];
+    const actions = document.querySelector('.gallery__actions');
+    if (actions) list.push(actions);
+    const status = document.getElementById('gallery-status');
+    if (status) list.push(status);
+    document.querySelectorAll('#gallery-grid > .gallery__item').forEach((el) => list.push(el));
+    return list;
+  };
+
+  const applyFade = () => {
+    ticking = false;
+    const navbarBottom = navbar.getBoundingClientRect().bottom;
+    const targets = collectTargets();
+    targets.forEach((el) => {
+      el.classList.add('gallery__fade');
+      const rect = el.getBoundingClientRect();
+      const distance = rect.top - navbarBottom;
+      // t = 0: element is well below the navbar (no effect).
+      // t = 1: element top has reached the navbar bottom or is above it.
+      const t = 1 - Math.max(0, Math.min(1, distance / FADE_ZONE));
+      if (t <= 0) {
+        el.style.transform = '';
+        el.style.opacity = '';
+        return;
+      }
+      const scale = 1 - 0.18 * t;      // shrink overall to ~82%
+      const scaleY = 1 - 0.7 * t;      // become thinner (down to ~30%)
+      const opacity = Math.max(0, 1 - t);
+      el.style.transform = `scale(${scale.toFixed(4)}) scaleY(${scaleY.toFixed(4)})`;
+      el.style.opacity = opacity.toFixed(4);
+    });
+  };
+
+  const requestUpdate = () => {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(applyFade);
+  };
+
+  window.addEventListener('scroll', requestUpdate, { passive: true });
+  window.addEventListener('resize', requestUpdate);
+
+  // Update after renders (gallery loads asynchronously and when language changes).
+  const observer = new MutationObserver(requestUpdate);
+  if (galleryGrid) observer.observe(galleryGrid, { childList: true });
+
+  requestUpdate();
+})();
