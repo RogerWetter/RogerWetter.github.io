@@ -186,7 +186,7 @@ loadGallery();
   const navbar = document.querySelector('.navbar');
   if (!navbar) return;
 
-  const FADE_ZONE = 220; // px transition zone above the navbar bottom
+  const FADE_ZONE = 140; // px transition zone above the navbar bottom (keep in sync with .gallery__page margin-top)
   const MIN_SCALE = 0.05; // how small elements get right before the navbar
   let ticking = false;
 
