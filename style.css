@@ -49,11 +49,6 @@ footer {
   align-items: center;
   gap: 0.25rem;
   background: transparent;
-  pointer-events: auto;
-}
-
-footer a {
-  pointer-events: auto;
 }
 
 .skip-link {
