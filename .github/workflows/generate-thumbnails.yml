@@ -83,7 +83,7 @@ jobs:
                 # MAX_WIDTH the cap would be silently ignored. A static
                 # thumbnail of the first frame is the right trade-off
                 # for a photo gallery grid.
-                convert "$src[0]" -auto-orient -resize "${MAX_WIDTH}x>" -quality "$QUALITY" "$out"
+                convert "${src}[0]" -auto-orient -resize "${MAX_WIDTH}x>" -quality "$QUALITY" "$out"
                 ;;
               webp|avif|heic|heif)
                 # Decode via ImageMagick (uses libwebp/libavif/libheif

@@ -115,7 +115,7 @@ const httpsGet = (url, redirectsLeft = 5) => new Promise((resolve, reject) => {
   }).on('error', reject);
 });
 
-(async () => {
+async function main() {
   const issueNumber = process.env.ISSUE_NUMBER;
   const body = process.env.ISSUE_BODY || '';
   const title = process.env.ISSUE_TITLE || '';
@@ -192,6 +192,23 @@ const httpsGet = (url, redirectsLeft = 5) => new Promise((resolve, reject) => {
     thumb_path: thumbPath,
     branch: `gallery-submission/${issueNumber}-${finalName}`,
   });
-})().catch((err) => {
-  finish('rejected', { reason: `Unexpected error: ${err.message}` });
-});
+};
+
+// Expose pure helpers for unit testing. The async workflow above is only
+// executed when this file is invoked as a script (i.e. by the workflow),
+// so `require()`-ing it from a test file is side-effect free.
+module.exports = {
+  SUBMISSION_MARKER,
+  MAX_BYTES,
+  ALLOWED_HOSTS,
+  ALLOWED_TYPES,
+  sanitiseName,
+  extractImageUrl,
+  httpsGet,
+};
+
+if (require.main === module) {
+  main().catch((err) => {
+    finish('rejected', { reason: `Unexpected error: ${err.message}` });
+  });
+}
