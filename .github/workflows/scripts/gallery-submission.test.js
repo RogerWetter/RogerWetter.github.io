@@ -14,6 +14,8 @@ const assert = require('node:assert/strict');
 const {
   SUBMISSION_MARKER,
   ALLOWED_HOSTS,
+  ALLOWED_HOST_PATTERNS,
+  isAllowedHost,
   ALLOWED_TYPES,
   sanitiseName,
   extractImageUrl,
@@ -37,6 +39,45 @@ test('ALLOWED_TYPES covers PNG, JPEG and WebP with canonical extensions', () => 
 test('ALLOWED_HOSTS only contains GitHub user-content domains', () => {
   for (const host of ALLOWED_HOSTS) {
     assert.match(host, /githubusercontent\.com$|^github\.com$/);
+  }
+});
+
+test('isAllowedHost accepts GitHub-owned user-attachment S3 buckets', () => {
+  // `github.com/user-attachments/assets/<uuid>` 302-redirects to a host of
+  // the form `github-production-user-asset-<shard>.s3.amazonaws.com`, so
+  // this pattern has to be honoured for drag-and-drop submissions to
+  // work end-to-end.
+  assert.equal(
+    isAllowedHost('github-production-user-asset-6210df.s3.amazonaws.com'),
+    true,
+  );
+  assert.equal(
+    isAllowedHost('github-production-user-asset-0a1b2c.s3.amazonaws.com'),
+    true,
+  );
+});
+
+test('isAllowedHost rejects look-alike S3 hostnames', () => {
+  // Guard against trivial bypasses of the S3 allow-pattern.
+  assert.equal(isAllowedHost('s3.amazonaws.com'), false);
+  assert.equal(isAllowedHost('evil.s3.amazonaws.com'), false);
+  assert.equal(
+    isAllowedHost('github-production-user-asset-6210df.s3.amazonaws.com.evil.test'),
+    false,
+  );
+  assert.equal(
+    isAllowedHost('evil.github-production-user-asset-6210df.s3.amazonaws.com'),
+    false,
+  );
+  assert.equal(isAllowedHost('github-production-user-asset-.s3.amazonaws.com'), false);
+});
+
+test('ALLOWED_HOST_PATTERNS are anchored regular expressions', () => {
+  for (const re of ALLOWED_HOST_PATTERNS) {
+    assert.ok(re instanceof RegExp);
+    // Anchors at both ends prevent suffix/prefix smuggling attacks.
+    assert.ok(re.source.startsWith('^'), `pattern ${re} must be left-anchored`);
+    assert.ok(re.source.endsWith('$'), `pattern ${re} must be right-anchored`);
   }
 });
 
