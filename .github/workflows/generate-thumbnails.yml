@@ -31,7 +31,7 @@ jobs:
       - name: Install image tools
         run: |
           sudo apt-get update
-          # webp:        cwebp/gif2webp for the fast/high-quality path
+          # webp:        cwebp for the fast/high-quality path on photos
           # imagemagick: handles every other supported format via its delegates
           # libheif/libavif: delegates so ImageMagick can read .heic/.heif/.avif
           sudo apt-get install -y webp imagemagick libheif1 libavif-bin
@@ -78,10 +78,12 @@ jobs:
                 cwebp -quiet -q "$QUALITY" -resize "$MAX_WIDTH" 0 "$src" -o "$out"
                 ;;
               gif)
-                # Animated/static GIFs go through gif2webp so animation
-                # is preserved when present.
-                gif2webp -quiet -q "$QUALITY" "$src" -o "$out" || \
-                  convert "$src[0]" -resize "${MAX_WIDTH}x>" -quality "$QUALITY" "$out"
+                # ImageMagick on the first frame: gif2webp would preserve
+                # animation but cannot resize, so for any GIF wider than
+                # MAX_WIDTH the cap would be silently ignored. A static
+                # thumbnail of the first frame is the right trade-off
+                # for a photo gallery grid.
+                convert "$src[0]" -auto-orient -resize "${MAX_WIDTH}x>" -quality "$QUALITY" "$out"
                 ;;
               webp|avif|heic|heif)
                 # Decode via ImageMagick (uses libwebp/libavif/libheif
