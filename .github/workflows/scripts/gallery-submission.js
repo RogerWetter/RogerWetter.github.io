@@ -37,6 +37,20 @@ const ALLOWED_HOSTS = new Set([
   'objects.githubusercontent.com',
 ]);
 
+// In addition to the exact-match list above, GitHub redirects
+// `github.com/user-attachments/assets/<uuid>` URLs to their backing S3
+// bucket, whose hostname looks like
+// `github-production-user-asset-<shard>.s3.amazonaws.com`. The shard
+// suffix varies, so we match it with a tightly scoped regular expression
+// rather than enumerating every value.
+const ALLOWED_HOST_PATTERNS = [
+  /^github-production-user-asset-[a-z0-9]+\.s3\.amazonaws\.com$/,
+];
+
+const isAllowedHost = (hostname) =>
+  ALLOWED_HOSTS.has(hostname)
+  || ALLOWED_HOST_PATTERNS.some((re) => re.test(hostname));
+
 // Allowed image content types and their canonical extensions.
 const ALLOWED_TYPES = new Map([
   ['image/png', 'png'],
@@ -84,7 +98,7 @@ const extractImageUrl = (body) => {
 const httpsGet = (url, redirectsLeft = 5) => new Promise((resolve, reject) => {
   if (redirectsLeft < 0) return reject(new Error('Too many redirects'));
   const u = new URL(url);
-  if (!ALLOWED_HOSTS.has(u.hostname)) {
+  if (!isAllowedHost(u.hostname)) {
     return reject(new Error(`Host not allowed: ${u.hostname}`));
   }
   https.get(url, { headers: { 'User-Agent': 'gallery-submission-bot' } }, (res) => {
@@ -201,6 +215,8 @@ module.exports = {
   SUBMISSION_MARKER,
   MAX_BYTES,
   ALLOWED_HOSTS,
+  ALLOWED_HOST_PATTERNS,
+  isAllowedHost,
   ALLOWED_TYPES,
   sanitiseName,
   extractImageUrl,
