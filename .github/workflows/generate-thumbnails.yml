@@ -28,10 +28,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install webp tools
+      - name: Install image tools
         run: |
           sudo apt-get update
-          sudo apt-get install -y webp
+          # webp:        cwebp/gif2webp for the fast/high-quality path
+          # imagemagick: handles every other supported format via its delegates
+          # libheif/libavif: delegates so ImageMagick can read .heic/.heif/.avif
+          sudo apt-get install -y webp imagemagick libheif1 libavif-bin
 
       - name: Generate missing thumbnails
         id: generate
@@ -40,16 +43,58 @@ jobs:
           mkdir -p Gallery/images/thumbs
           created=0
           shopt -s nullglob nocaseglob
-          for src in Gallery/images/*.jpg Gallery/images/*.jpeg Gallery/images/*.png; do
+
+          # Resize all gallery originals to a max width of 800 px and encode
+          # as WebP with quality 78 — those numbers were tuned empirically:
+          # 800 px is the largest grid cell on a typical 4K display, and
+          # q=78 keeps photos visually indistinguishable from the original
+          # at this size while compressing ~100x relative to JPEG sources.
+          # Keep these constants in sync with the values used by the
+          # `Gallery submission` workflow in `scripts/gallery-submission.js`.
+          MAX_WIDTH=800
+          QUALITY=78
+
+          # Cover every extension that the gallery treats as a supported
+          # image (see supportedImageExtensions in Gallery/gallery.js).
+          for src in \
+              Gallery/images/*.jpg Gallery/images/*.jpeg \
+              Gallery/images/*.png Gallery/images/*.webp \
+              Gallery/images/*.gif \
+              Gallery/images/*.avif \
+              Gallery/images/*.heic Gallery/images/*.heif; do
             [ -f "$src" ] || continue
             name="$(basename "$src")"
             base="${name%.*}"
+            ext_lc="$(echo "${name##*.}" | tr '[:upper:]' '[:lower:]')"
             out="Gallery/images/thumbs/${base}.webp"
             if [ -f "$out" ] && [ "$out" -nt "$src" ]; then
               continue
             fi
             echo "Generating $out from $src"
-            cwebp -quiet -q 78 -resize 800 0 "$src" -o "$out"
+            case "$ext_lc" in
+              jpg|jpeg|png)
+                # cwebp handles JPEG/PNG natively and produces the
+                # smallest files for photographic content.
+                cwebp -quiet -q "$QUALITY" -resize "$MAX_WIDTH" 0 "$src" -o "$out"
+                ;;
+              gif)
+                # Animated/static GIFs go through gif2webp so animation
+                # is preserved when present.
+                gif2webp -quiet -q "$QUALITY" "$src" -o "$out" || \
+                  convert "$src[0]" -resize "${MAX_WIDTH}x>" -quality "$QUALITY" "$out"
+                ;;
+              webp|avif|heic|heif)
+                # Decode via ImageMagick (uses libwebp/libavif/libheif
+                # delegates) and re-encode as resized WebP. The `>` flag
+                # only resizes images that are wider than MAX_WIDTH so
+                # small originals are not upscaled.
+                convert "$src" -auto-orient -resize "${MAX_WIDTH}x>" -quality "$QUALITY" "$out"
+                ;;
+              *)
+                echo "Skipping unsupported extension: $src"
+                continue
+                ;;
+            esac
             created=$((created + 1))
           done
           echo "created=$created" >> "$GITHUB_OUTPUT"
