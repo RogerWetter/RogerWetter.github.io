@@ -23,6 +23,16 @@ name: Gallery submission
 on:
   issues:
     types: [opened, edited, labeled, reopened]
+  # Allows the workflow to be re-run manually for a specific issue, e.g.
+  # while testing or after fixing a previously rejected submission. The
+  # job below uses `gh issue view` to load the issue payload when this
+  # event is the trigger.
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: 'Issue number to (re)process as a gallery submission'
+        required: true
+        type: string
 
 permissions:
   contents: write
@@ -33,18 +43,50 @@ concurrency:
   # One submission at a time, keyed on the issue, so retriggers (e.g.
   # the user editing the body to attach the image) replace the in-flight
   # run instead of racing with it.
-  group: gallery-submission-${{ github.event.issue.number }}
+  group: gallery-submission-${{ github.event.issue.number || inputs.issue_number }}
   cancel-in-progress: true
 
 jobs:
   process:
-    if: contains(github.event.issue.labels.*.name, 'gallery-submission')
+    # Run when the issue carries the `gallery-submission` label, OR when
+    # the body still contains the hidden submission marker the drawboard
+    # injects. The marker fallback matters because GitHub silently drops
+    # the `labels=` query parameter on `issues/new?...` if the label has
+    # never been created in the repository — without this fallback the
+    # very first submission would be skipped (the script still re-checks
+    # the marker server-side, so this stays safe). `workflow_dispatch`
+    # always runs so a maintainer can retry manually.
+    if: >-
+      github.event_name == 'workflow_dispatch'
+      || contains(github.event.issue.labels.*.name, 'gallery-submission')
+      || contains(github.event.issue.body, '<!-- gallery-submission -->')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Load issue payload (workflow_dispatch only)
+        if: github.event_name == 'workflow_dispatch'
+        id: load_issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ inputs.issue_number }}
+        run: |
+          set -euo pipefail
+          payload="$(gh issue view "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" \
+            --json number,title,body,author)"
+          {
+            echo "number=$(echo "$payload" | jq -r '.number')"
+            echo "author=$(echo "$payload" | jq -r '.author.login')"
+            echo "title<<__EOF__"
+            echo "$payload" | jq -r '.title'
+            echo "__EOF__"
+            echo "body<<__EOF__"
+            echo "$payload" | jq -r '.body'
+            echo "__EOF__"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Install webp tools
         run: |
@@ -54,26 +96,27 @@ jobs:
       - name: Process submission
         id: process
         env:
-          ISSUE_NUMBER: ${{ github.event.issue.number }}
-          ISSUE_TITLE: ${{ github.event.issue.title }}
-          ISSUE_BODY: ${{ github.event.issue.body }}
-          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
+          ISSUE_NUMBER: ${{ github.event.issue.number || steps.load_issue.outputs.number }}
+          ISSUE_TITLE: ${{ github.event.issue.title || steps.load_issue.outputs.title }}
+          ISSUE_BODY: ${{ github.event.issue.body || steps.load_issue.outputs.body }}
+          ISSUE_AUTHOR: ${{ github.event.issue.user.login || steps.load_issue.outputs.author }}
         run: node .github/workflows/scripts/gallery-submission.js
 
       - name: Comment "needs attachment"
         if: steps.process.outputs.status == 'needs-attachment'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_NUMBER: ${{ github.event.issue.number || steps.load_issue.outputs.number }}
+          ISSUE_AUTHOR: ${{ github.event.issue.user.login || steps.load_issue.outputs.author }}
         run: |
           gh issue comment "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" \
-            --body "Hi @${{ github.event.issue.user.login }} 👋 — I could not find an image attachment in this submission yet. Please drag and drop the PNG file your browser downloaded into the issue body and save the change. I will pick it up automatically."
+            --body "Hi @$ISSUE_AUTHOR 👋 — I could not find an image attachment in this submission yet. Please drag and drop the PNG file your browser downloaded into the issue body and save the change. I will pick it up automatically."
 
       - name: Comment "rejected"
         if: steps.process.outputs.status == 'rejected'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_NUMBER: ${{ github.event.issue.number || steps.load_issue.outputs.number }}
           REJECT_REASON: ${{ steps.process.outputs.reason }}
         run: |
           gh issue comment "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" \
@@ -83,12 +126,12 @@ jobs:
         if: steps.process.outputs.status == 'ready'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_NUMBER: ${{ github.event.issue.number || steps.load_issue.outputs.number }}
           BRANCH_NAME: ${{ steps.process.outputs.branch }}
           IMAGE_PATH: ${{ steps.process.outputs.image_path }}
           THUMB_PATH: ${{ steps.process.outputs.thumb_path }}
           SAFE_NAME: ${{ steps.process.outputs.safe_name }}
-          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
+          ISSUE_AUTHOR: ${{ github.event.issue.user.login || steps.load_issue.outputs.author }}
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"

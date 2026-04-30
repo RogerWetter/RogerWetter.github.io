@@ -1,0 +1,67 @@
+# Lightweight CI for pull requests. The site itself is plain HTML/CSS/JS
+# served by GitHub Pages, so there is no build step to run — this workflow
+# instead guards the few moving parts that are easy to break by accident:
+#
+#   * the Node helper script behind the `Gallery submission` workflow
+#     (unit tests + syntax check),
+#   * every other JavaScript file in the repo (syntax check only — the
+#     browser is the runtime, so we don't try to execute them here),
+#   * every workflow YAML file under .github/workflows/ (actionlint).
+#
+# The goal is fast, dependency-free feedback on PRs; nothing here installs
+# npm packages or runs the website.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Tests & syntax checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run unit tests (gallery submission helper)
+        run: node --test .github/workflows/scripts/gallery-submission.test.js
+
+      - name: Syntax-check all .js files
+        # `node --check` parses each file without executing it. It catches
+        # typos, stray characters and unterminated strings — the kind of
+        # bug that would otherwise only surface in the browser.
+        run: |
+          set -euo pipefail
+          mapfile -t files < <(git ls-files '*.js')
+          for f in "${files[@]}"; do
+            echo "checking $f"
+            node --check "$f"
+          done
+
+  actionlint:
+    name: Lint workflow YAML
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run actionlint
+        # actionlint statically validates every workflow under
+        # .github/workflows/: schema, expression syntax, shell snippets
+        # (via shellcheck), referenced action versions, etc.
+        # Pinned to a known-good release rather than `latest` so the
+        # check is reproducible.
+        uses: raven-actions/actionlint@v2
+        with:
+          version: v1.7.7
