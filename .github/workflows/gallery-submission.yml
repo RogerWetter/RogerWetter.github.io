@@ -1,0 +1,123 @@
+# Watches for issues labelled `gallery-submission` and turns them into a
+# pull request that adds the attached drawing to Gallery/images/.
+#
+# Flow (Variant B from the task discussion):
+#   1. A drawboard user clicks "submit for review" → browser opens a new
+#      issue prefilled with `<!-- gallery-submission -->`, the image name
+#      and label `gallery-submission`. The user drops the just-downloaded
+#      PNG into the issue body.
+#   2. This workflow triggers on `issues: opened|edited|labeled`.
+#   3. It parses the first markdown image attachment from the body,
+#      downloads it (only from trusted GitHub user-content hosts), saves
+#      it under Gallery/images/<safe-name>.png, generates a WebP thumb,
+#      and opens a PR referencing the issue.
+#
+# Safety:
+#   * Only attachments hosted on GitHub user-content domains are
+#     downloaded (no arbitrary URLs from issue bodies).
+#   * Image size is capped at 5 MB.
+#   * File names are sanitised the same way the drawboard sanitises them.
+#   * The workflow only opens a PR – the repo owner still has to merge.
+name: Gallery submission
+
+on:
+  issues:
+    types: [opened, edited, labeled, reopened]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  # One submission at a time, keyed on the issue, so retriggers (e.g.
+  # the user editing the body to attach the image) replace the in-flight
+  # run instead of racing with it.
+  group: gallery-submission-${{ github.event.issue.number }}
+  cancel-in-progress: true
+
+jobs:
+  process:
+    if: contains(github.event.issue.labels.*.name, 'gallery-submission')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install webp tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y webp
+
+      - name: Process submission
+        id: process
+        env:
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
+        run: node .github/workflows/scripts/gallery-submission.js
+
+      - name: Comment "needs attachment"
+        if: steps.process.outputs.status == 'needs-attachment'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          gh issue comment "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" \
+            --body "Hi @${{ github.event.issue.user.login }} 👋 — I could not find an image attachment in this submission yet. Please drag and drop the PNG file your browser downloaded into the issue body and save the change. I will pick it up automatically."
+
+      - name: Comment "rejected"
+        if: steps.process.outputs.status == 'rejected'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          REJECT_REASON: ${{ steps.process.outputs.reason }}
+        run: |
+          gh issue comment "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" \
+            --body "Sorry, this submission could not be processed automatically: $REJECT_REASON"
+
+      - name: Create pull request
+        if: steps.process.outputs.status == 'ready'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          BRANCH_NAME: ${{ steps.process.outputs.branch }}
+          IMAGE_PATH: ${{ steps.process.outputs.image_path }}
+          THUMB_PATH: ${{ steps.process.outputs.thumb_path }}
+          SAFE_NAME: ${{ steps.process.outputs.safe_name }}
+          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # Always create the submission branch from main with just the
+          # new files on top. Re-runs of the same issue force-push to the
+          # same branch so the existing PR (if any) updates in place.
+          git checkout -B "$BRANCH_NAME"
+          git add "$IMAGE_PATH" "$THUMB_PATH"
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "feat(gallery): add submission \"$SAFE_NAME\" (closes #$ISSUE_NUMBER)"
+          git push --set-upstream origin "$BRANCH_NAME" --force
+
+          existing_pr="$(gh pr list --head "$BRANCH_NAME" --state open --json number --jq '.[0].number' || true)"
+          if [ -n "$existing_pr" ]; then
+            echo "Existing PR #$existing_pr already targets this branch; updated by force-push."
+          else
+            gh pr create \
+              --title "Gallery submission: $SAFE_NAME" \
+              --body "Automated submission from issue #$ISSUE_NUMBER by @$ISSUE_AUTHOR.
+
+          Closes #$ISSUE_NUMBER" \
+              --base main \
+              --head "$BRANCH_NAME"
+          fi
+
+          gh issue comment "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" \
+            --body "Thanks @$ISSUE_AUTHOR! I prepared a pull request from this submission. The repository owner will review and merge it."
