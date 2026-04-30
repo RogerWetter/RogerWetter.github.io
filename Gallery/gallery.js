@@ -52,16 +52,28 @@ const renderImages = (images) => {
 
     const link = document.createElement('a');
     link.classList.add('gallery__link');
+    // Clicking always opens the full-quality original.
     link.href = image.url;
     link.target = '_blank';
     link.rel = 'noopener noreferrer';
 
     const img = document.createElement('img');
     img.classList.add('gallery__image');
-    img.src = image.url;
+    // Use the lightweight WebP preview for the grid when available; this
+    // keeps the gallery snappy while the original (often several MB) is
+    // only fetched on click.
+    img.src = image.thumbUrl || image.url;
     img.alt = image.name;
     img.loading = 'lazy';
     img.decoding = 'async';
+    // If the thumbnail fails to load (e.g. it has not been generated yet
+    // for a brand-new public image) fall back to the original so the
+    // gallery never shows a broken image.
+    if (image.thumbUrl && image.thumbUrl !== image.url) {
+      img.addEventListener('error', () => {
+        if (img.src !== image.url) img.src = image.url;
+      }, { once: true });
+    }
 
     const meta = document.createElement('div');
     meta.classList.add('gallery__meta');
@@ -116,6 +128,8 @@ const getStoredDrawboardImages = () => {
   }
 };
 
+const stripExtension = (filename) => filename.replace(/\.[^.]+$/, '');
+
 const loadGallery = async () => {
   try {
     const response = await fetch(`https://api.github.com/repos/${githubOwner}/${githubRepo}/contents/Gallery/images`);
@@ -126,11 +140,33 @@ const loadGallery = async () => {
     }
 
     const files = await response.json();
+
+    // Build a map of available thumbnails (by basename without extension)
+    // so we can pair each original with its lightweight preview.
+    const thumbsDir = files.find((file) => file.type === 'dir' && file.name === 'thumbs');
+    const thumbsByBase = new Map();
+    if (thumbsDir) {
+      try {
+        const thumbsResponse = await fetch(thumbsDir.url);
+        if (thumbsResponse.ok) {
+          const thumbFiles = await thumbsResponse.json();
+          if (Array.isArray(thumbFiles)) {
+            thumbFiles
+              .filter((file) => file.type === 'file' && isSupportedImage(file.name))
+              .forEach((file) => thumbsByBase.set(stripExtension(file.name), file.download_url));
+          }
+        }
+      } catch (thumbsError) {
+        // Not fatal — fall back to originals if thumbs cannot be listed.
+      }
+    }
+
     const publicImages = files
       .filter((file) => file.type === 'file' && isSupportedImage(file.name))
       .map((file) => ({
         name: file.name,
         url: file.download_url,
+        thumbUrl: thumbsByBase.get(stripExtension(file.name)) || file.download_url,
         source: 'public'
       }))
       .sort((a, b) => a.name.localeCompare(b.name, i18n()?.getLanguage?.() || 'en'));
@@ -182,6 +218,13 @@ loadGallery();
 // vanishing point, the entire grid visually collapses together instead of
 // each image being clipped independently. Using a CSS transform keeps the
 // border stroke and border-radius intact (they simply scale with the rest).
+//
+// Important: we read element geometry from the *layout* box (offsetTop /
+// offsetHeight / offsetLeft / offsetWidth) instead of getBoundingClientRect.
+// getBoundingClientRect() returns the already-transformed box, so once an
+// element is scaled down its top/height feed back into the next frame's
+// calculation, causing the well-known shrink/grow flicker. The layout box
+// is unaffected by transforms and stays stable.
 (() => {
   const navbar = document.querySelector('.navbar');
   if (!navbar) return;
@@ -189,6 +232,7 @@ loadGallery();
   const FADE_ZONE = 140; // px transition zone above the navbar bottom (keep in sync with .gallery__page margin-top)
   const MIN_SCALE = 0.05; // how small elements get right before the navbar
   let ticking = false;
+  let layoutCache = null; // { items: [{el, top, left, width, height}], gridCenterX }
 
   const collectTargets = () => {
     const list = [];
@@ -198,6 +242,62 @@ loadGallery();
     if (status) list.push(status);
     document.querySelectorAll('#gallery-grid > .gallery__item').forEach((el) => list.push(el));
     return list;
+  };
+
+  // Walk the offsetParent chain to compute an element's position relative
+  // to the document. offset* values ignore CSS transforms, so we get a
+  // stable geometry that does not shift while we are animating.
+  const getDocumentTop = (el) => {
+    let top = 0;
+    let node = el;
+    while (node) {
+      top += node.offsetTop;
+      node = node.offsetParent;
+    }
+    return top;
+  };
+  const getDocumentLeft = (el) => {
+    let left = 0;
+    let node = el;
+    while (node) {
+      left += node.offsetLeft;
+      node = node.offsetParent;
+    }
+    return left;
+  };
+
+  const rebuildLayoutCache = () => {
+    // Temporarily strip any active transforms before measuring. Even though
+    // offset* is supposed to ignore transforms, browsers can still differ
+    // around fractional pixel values; clearing first makes measurements
+    // deterministic.
+    const targets = collectTargets();
+    targets.forEach((el) => {
+      el.style.transform = '';
+      el.style.transformOrigin = '';
+      el.style.opacity = '';
+    });
+
+    const items = targets.map((el) => ({
+      el,
+      top: getDocumentTop(el),
+      left: getDocumentLeft(el),
+      width: el.offsetWidth,
+      height: el.offsetHeight,
+    }));
+
+    const grid = document.getElementById('gallery-grid');
+    let gridCenterX = window.innerWidth / 2;
+    if (grid) {
+      gridCenterX = getDocumentLeft(grid) + grid.offsetWidth / 2;
+    }
+
+    layoutCache = { items, gridCenterX };
+  };
+
+  const invalidateLayoutCache = () => {
+    layoutCache = null;
+    requestUpdate();
   };
 
   // Compute t for a given page-Y position (in viewport coordinates).
@@ -210,22 +310,24 @@ loadGallery();
 
   const applyFade = () => {
     ticking = false;
-    const navbarRect = navbar.getBoundingClientRect();
-    const navbarBottom = navbarRect.bottom;
-    const grid = document.getElementById('gallery-grid');
-    const gridRect = grid ? grid.getBoundingClientRect() : null;
-    // The common vanishing point: horizontal centre of the grid, vertically
-    // just under the navbar. All shrinking items converge on this point.
-    const vanishX = gridRect ? gridRect.left + gridRect.width / 2 : window.innerWidth / 2;
+
+    if (!layoutCache) rebuildLayoutCache();
+
+    const navbarBottom = navbar.getBoundingClientRect().bottom;
+    const scrollY = window.scrollY || window.pageYOffset || 0;
+    const scrollX = window.scrollX || window.pageXOffset || 0;
+    const vanishX = layoutCache.gridCenterX - scrollX;
     const vanishY = navbarBottom;
 
-    const targets = collectTargets();
-    targets.forEach((el) => {
+    layoutCache.items.forEach((entry) => {
+      const { el, top, left, width, height } = entry;
       el.classList.add('gallery__fade');
-      const rect = el.getBoundingClientRect();
-      // Use the element's vertical centre so an entire row shrinks at the
-      // same rate, making the grid collapse as a whole.
-      const centreY = rect.top + rect.height / 2;
+      // Convert the cached document-relative geometry into viewport
+      // coordinates *only* using the current scroll position. No
+      // transform-affected values are ever read back, so the calculation
+      // is stable across frames.
+      const viewportTop = top - scrollY;
+      const centreY = viewportTop + height / 2;
       const t = tAt(centreY, navbarBottom);
       if (t <= 0) {
         el.style.transform = '';
@@ -238,8 +340,9 @@ loadGallery();
       // convert the shared screen-space vanishing point into local
       // coordinates. This makes every element shrink toward the same point
       // on screen regardless of where it sits in the grid.
-      const originX = rect.width > 0 ? ((vanishX - rect.left) / rect.width) * 100 : 50;
-      const originY = rect.height > 0 ? ((vanishY - rect.top) / rect.height) * 100 : 50;
+      const viewportLeft = left - scrollX;
+      const originX = width > 0 ? ((vanishX - viewportLeft) / width) * 100 : 50;
+      const originY = height > 0 ? ((vanishY - viewportTop) / height) * 100 : 50;
       el.style.transformOrigin = `${originX.toFixed(3)}% ${originY.toFixed(3)}%`;
       el.style.transform = `scale(${scale.toFixed(4)})`;
       // Fade out non-linearly so elements stay legible until they are very
@@ -248,18 +351,22 @@ loadGallery();
     });
   };
 
-  const requestUpdate = () => {
+  function requestUpdate() {
     if (ticking) return;
     ticking = true;
     window.requestAnimationFrame(applyFade);
-  };
+  }
 
   window.addEventListener('scroll', requestUpdate, { passive: true });
-  window.addEventListener('resize', requestUpdate);
+  window.addEventListener('resize', invalidateLayoutCache);
 
   // Update after renders (gallery loads asynchronously and when language changes).
-  const observer = new MutationObserver(requestUpdate);
+  const observer = new MutationObserver(invalidateLayoutCache);
   if (galleryGrid) observer.observe(galleryGrid, { childList: true });
+
+  // Recompute the layout cache once images have loaded (their natural size
+  // changes the row height) so the cache reflects the final layout.
+  window.addEventListener('load', invalidateLayoutCache);
 
   requestUpdate();
 })();

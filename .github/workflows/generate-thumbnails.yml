@@ -1,0 +1,68 @@
+# Auto-generates lightweight WebP previews for any image in Gallery/images/.
+# Whenever a new picture is added to the gallery, this workflow creates a
+# matching <name>.webp under Gallery/images/thumbs/ (max 800px wide) and
+# commits it back. The gallery UI uses these previews in the grid and only
+# loads the full-quality original when a visitor clicks an image.
+name: Generate gallery thumbnails
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'Gallery/images/**'
+      - '!Gallery/images/thumbs/**'
+      - '.github/workflows/generate-thumbnails.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gallery-thumbnails
+  cancel-in-progress: false
+
+jobs:
+  thumbnails:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install webp tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y webp
+
+      - name: Generate missing thumbnails
+        id: generate
+        run: |
+          set -euo pipefail
+          mkdir -p Gallery/images/thumbs
+          created=0
+          shopt -s nullglob nocaseglob
+          for src in Gallery/images/*.jpg Gallery/images/*.jpeg Gallery/images/*.png; do
+            [ -f "$src" ] || continue
+            name="$(basename "$src")"
+            base="${name%.*}"
+            out="Gallery/images/thumbs/${base}.webp"
+            if [ -f "$out" ] && [ "$out" -nt "$src" ]; then
+              continue
+            fi
+            echo "Generating $out from $src"
+            cwebp -quiet -q 78 -resize 800 0 "$src" -o "$out"
+            created=$((created + 1))
+          done
+          echo "created=$created" >> "$GITHUB_OUTPUT"
+
+      - name: Commit thumbnails
+        if: steps.generate.outputs.created != '0'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Gallery/images/thumbs
+          if git diff --cached --quiet; then
+            echo "No thumbnail changes to commit."
+            exit 0
+          fi
+          git commit -m "chore(gallery): regenerate thumbnails"
+          git push
