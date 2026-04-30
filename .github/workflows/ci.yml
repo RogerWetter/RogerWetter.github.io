@@ -64,4 +64,7 @@ jobs:
         # check is reproducible.
         uses: raven-actions/actionlint@v2
         with:
-          version: v1.7.7
+          # raven-actions/actionlint internally prepends `v` to this value
+          # when calling the GitHub Releases API, so pass the bare semver
+          # (e.g. `1.7.7`, not `v1.7.7`) to avoid a `vv1.7.7` 404.
+          version: 1.7.7
