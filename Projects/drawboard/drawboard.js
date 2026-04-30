@@ -8,6 +8,10 @@ let erasing = false
 const galleryStorageKey = 'rw.gallery.customImages'
 const REDIRECT_DELAY_MS = 800
 const GALLERY_PATH = '/Gallery/'
+const GITHUB_OWNER = 'RogerWetter'
+const GITHUB_REPO = 'RogerWetter.github.io'
+const GALLERY_SUBMISSION_LABEL = 'gallery-submission'
+const GALLERY_SUBMISSION_MARKER = '<!-- gallery-submission -->'
 const t = (key, values = {}) => window.RW_I18N?.t(key, values) ?? key
 
 window.addEventListener('load', () => {
@@ -194,6 +198,39 @@ const getStoredGalleryImages = () => {
   }
 }
 
+const triggerDownload = (dataUrl, filename) => {
+  const link = document.createElement('a')
+  link.href = dataUrl
+  link.download = filename
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+}
+
+const buildSubmissionIssueUrl = (safeName) => {
+  // The issue body intentionally contains a placeholder where the user
+  // drops the PNG file we just downloaded. A backend workflow then parses
+  // the attachment URL and opens a PR. The marker lets the workflow
+  // recognise legitimate submissions even if a curious user opens an
+  // issue with the same label by hand.
+  const bodyLines = [
+    GALLERY_SUBMISSION_MARKER,
+    '',
+    `**${t('drawboard.submission.imageName')}:** ${safeName}`,
+    '',
+    t('drawboard.submission.instructions'),
+    '',
+    '<!-- attach the image below this line -->',
+    '',
+  ]
+  const params = new URLSearchParams({
+    labels: GALLERY_SUBMISSION_LABEL,
+    title: `${t('drawboard.submission.titlePrefix')}: ${safeName}`,
+    body: bodyLines.join('\n'),
+  })
+  return `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/issues/new?${params.toString()}`
+}
+
 saveToGalleryBtn.onclick = () => {
   if (!hasVisibleDrawing()) {
     showStatus(t('drawboard.empty'))
@@ -213,16 +250,46 @@ saveToGalleryBtn.onclick = () => {
   const warningAccepted = confirm(t('drawboard.publicWarning'))
   if (!warningAccepted) return
 
+  const dataUrl = canvas.toDataURL('image/png')
+
   const newImage = {
     id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
     name: safeName,
     source: 'drawboard',
     createdAt: new Date().toISOString(),
-    url: canvas.toDataURL('image/png')
+    url: dataUrl
   }
 
   const images = [newImage, ...getStoredGalleryImages()].slice(0, 40)
   localStorage.setItem(galleryStorageKey, JSON.stringify(images))
+
+  // Second prompt: should this drawing also be submitted to the public
+  // gallery for review? "Cancel" keeps the previous behaviour (local
+  // only) so the existing flow is preserved by default.
+  const submitForReview = confirm(t('drawboard.submitPrompt'))
+  if (submitForReview) {
+    triggerDownload(dataUrl, `${safeName}.png`)
+    const issueUrl = buildSubmissionIssueUrl(safeName)
+    // Open the prefilled issue in a new tab. Some browsers block
+    // window.open if it is not the immediate result of a user gesture;
+    // confirm() preserves the gesture so this is safe here.
+    const opened = window.open(issueUrl, '_blank', 'noopener,noreferrer')
+    if (!opened) {
+      // Popup blocked: fall back to navigating in the same tab after a
+      // short delay so the user still sees the saved-status message.
+      window.setTimeout(() => {
+        window.location.href = issueUrl
+      }, REDIRECT_DELAY_MS)
+      showStatus(t('drawboard.submission.opening'))
+      return
+    }
+    showStatus(t('drawboard.submission.opened'))
+    window.setTimeout(() => {
+      window.location.href = GALLERY_PATH
+    }, REDIRECT_DELAY_MS * 2)
+    return
+  }
+
   showStatus(t('drawboard.saved'))
   window.setTimeout(() => {
     window.location.href = GALLERY_PATH
