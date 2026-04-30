@@ -11,7 +11,7 @@ Unterstützte Dateitypen: `.jpg`, `.jpeg`, `.png`, `.webp`, `.gif`, `.avif`, `.h
 Beim nächsten Push auf `main` generiert der Workflow `Generate gallery thumbnails`
 automatisch verkleinerte WebP-Vorschauen unter `Gallery/images/thumbs/`. Die
 Galerie zeigt die Vorschauen im Grid und lädt das Original erst beim Klick auf
-ein Bild — so bleibt die Galerie schnell, auch bei vielen mehreren MB grossen
+ein Bild — so bleibt die Galerie schnell, auch bei vielen, mehrere MB grossen
 Originalen.
 
 ### Drawboard-Einreichungen
